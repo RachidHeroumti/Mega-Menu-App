@@ -1,0 +1,46 @@
+<div class="w-full flex justify-center bg-white">
+    <!-- Include Tailwind CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@latest/dist/tailwind.min.css" rel="stylesheet">
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap');
+  
+      * {
+        font-family: 'Poppins', sans-serif;
+      }
+  
+      button {
+        background-color: #37AFE1;
+      }
+  
+      button:hover {
+        background-color: #4CC9FE;
+      }
+    </style>
+  
+    <!-- Component HTML -->
+    <div class="container w-full border border-gray-300 p-4">
+      <h1 class="text-2xl font-medium mb-4 text-black border-b pb-2">Menus</h1>
+      <div class="flex justify-end w-full pb-5">
+        <button @click="showtoaddmenu=true" 
+        class="text-white p-1 px-4 rounded-md">Add menu</button>
+      </div>
+      <div>
+        <div class="flex justify-between w-full font-medium text-gray-800 text-xl mb-4 px-4">
+          <h2 class="w-full">Name</h2>
+          <h2 class="w-full">Type</h2>
+          <h2 class="w-full">Placement</h2>
+          <h2 class="w-full">Actions</h2>
+        </div>
+        <div class="flex justify-between w-full text-gray-800 text-sm py-2 bg-gray-100 rounded-md px-4">
+          <h2 class="w-full">Header menu</h2>
+          <h2 class="w-full">Collections</h2>
+          <h2 class="w-full">HERDER_TOP</h2>
+          <div class="w-full flex space-x-2">
+            <button class="text-blue-500 hover:underline bg-transparent">Edit</button>
+            <button class="text-red-500 hover:underline bg-transparent">Delete</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  

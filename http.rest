@@ -1,0 +1,31 @@
+# Prod
+@token =eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7Il9pZCI6IjY2ZjUzNzBmNzk4OTkzOWRjMzM1Nzc1YiIsImZpcnN0bmFtZSI6InJhY2hpZCIsImxhc3RuYW1lIjoiaGVyb3VtdGkwIiwicG9zaXRpb24iOiJDTElFTlQiLCJlbWFpbCI6InJhY2hpZGhlcm91bXRpMEBnbWFpbC5jb20iLCJhZGRyZXNzIjpudWxsfSwiY29tcGFueSI6eyJfaWQiOiI2MjU0M2I0MzVhZjc4ZjAwNDRiNTdjN2MiLCJuYW1lIjoic291OWlubyIsInN0YXR1cyI6IlVOQ09NUExFVEVEIn0sInN0b3JlIjp7Il9pZCI6IjY3MWEwZDgxYmQxNWI5MDAxMjI1NjY0MSIsIm5hbWUiOiJiYXplbGxhIiwic3ViZG9tYWluIjoiYmF6ZWxsYS5zdG9yZWluby53b3JsZCJ9LCJ0ZWFtIjp7Il9pZCI6IjY3M2M4ZjA5NjhkOTBhZjcwMTIzY2UwYyIsIm5hbWUiOiJhcHBzX3RoZW1lIiwiZW1haWwiOiJyYWNoaWRoZXJvdW10aTBAZ21haWwuY29tIn0sInRva2VuSWQiOiIxNzU3MTdCTlpDTkM3NzUxNDVUR1NVUlYiLCJpYXQiOjE3MzIwMzEzNzIsImV4cCI6MTczMjg5NTM3Mn0.yIvf7huHD3UQQgU7c413frIrnK1mq4HfPDugHFGL-T
+
+###
+GET https://api-stores.storeino.com/api/apps/search/?route=countryblocker
+X-Auth-Token: {{token}}
+
+###
+POST https://api-stores.storeino.com/api/apps/update/?route=megamenu
+Content-Type: application/json
+X-Auth-Token: {{token}}
+
+{
+    "team": {
+        "_id": "650abc8b4436be5412bdk9e4",
+        "name": "StoreinoApps",
+        "url": "#"
+    },
+    "config":{
+
+    },
+    "images": ["https://storeno.b-cdn.net/market/10-2023/1697109170559.png"],
+    "placement": "AFTER_HEADER|BEFORE_FOOTER",
+    "adminPlacement": "NONE",
+    "isActive": true,
+    "autoRenew": false,
+    "description": "mega menu application.",
+    "name": "MegaMenu",
+    "route": "megamenu",
+    "expiryDate": "2029-11-07T13:21:57.398Z",
+}

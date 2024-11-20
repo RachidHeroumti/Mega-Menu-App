@@ -1,0 +1,23 @@
+
+    {
+      "collections":[],
+      "products":[],
+      "blogs":[],
+        "texts": {
+            "errorCode": "402",
+            "title": "Access Denied !",
+            "subTitle": "You are not authorized person to access this site.",
+            "redirectProductSlug": "product-slug"
+        },
+        "colors": {
+            "pageBackground": "#ffffff",
+            "boxBackground": "#ffffff",
+            "codeBackground": "#ffffff",
+            "codeColor": "#000000",
+            "codeBorderColor": "#000000",
+            "titleColor": "#000000",
+            "subTitleColor": "#000000",
+            "loaderBackground": "#ffffff",
+            "loaderColor": "#000000"
+        }
+    }
