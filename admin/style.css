@@ -1,3 +1,6 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap');
+
+
 :root {
     --dark-color: rgb(22, 22, 22);
     --primary-color: #42535c;
@@ -12,6 +15,26 @@
     --normal-size: 18px;
     --small-size: 16px;
   }
+
+  
+  * {
+    font-family: 'Poppins', sans-serif;
+  }
+
+  button {
+    background-color: #37AFE1 !important;
+  }
+
+  button:hover {
+    background-color: #4CC9FE !important ;
+  }
+
+
+
+
+
+
+
   
   /* transirion */
   #app_adinserter .mx-5 {

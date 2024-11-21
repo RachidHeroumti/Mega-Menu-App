@@ -1,46 +1,293 @@
-<div class="w-full flex justify-center bg-white">
-    <!-- Include Tailwind CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@latest/dist/tailwind.min.css" rel="stylesheet">
-    <style>
-      @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap');
-  
-      * {
-        font-family: 'Poppins', sans-serif;
-      }
-  
-      button {
-        background-color: #37AFE1;
-      }
-  
-      button:hover {
-        background-color: #4CC9FE;
-      }
-    </style>
-  
-    <!-- Component HTML -->
-    <div class="container w-full border border-gray-300 p-4">
-      <h1 class="text-2xl font-medium mb-4 text-black border-b pb-2">Menus</h1>
-      <div class="flex justify-end w-full pb-5">
-        <button @click="showtoaddmenu=true" 
-        class="text-white p-1 px-4 rounded-md">Add menu</button>
-      </div>
+<div class="w-full flex flex-col justify-center bg-white">
+  <script src="../storeino-app-admin.js"></script>
+  <link
+    href="https://cdn.jsdelivr.net/npm/tailwindcss@latest/dist/tailwind.min.css"
+    rel="stylesheet"
+  />
+
+  <div id="app_mega_menu" v-if="data">
+    <template>
       <div>
-        <div class="flex justify-between w-full font-medium text-gray-800 text-xl mb-4 px-4">
-          <h2 class="w-full">Name</h2>
-          <h2 class="w-full">Type</h2>
-          <h2 class="w-full">Placement</h2>
-          <h2 class="w-full">Actions</h2>
+        <div class="container w-full border border-gray-300 p-4">
+          <h1 class="text-2xl font-medium mb-4 text-black border-b pb-2">
+            Menus
+          </h1>
+          <div class="flex justify-end w-full pb-5">
+            <button
+              @click="showtoaddmenu=true"
+              class="text-white p-1 px-4 rounded-md bg-red-500"
+            >
+              Add menu
+            </button>
+          </div>
+          <div>
+            <div
+              class="flex justify-between w-full font-medium text-gray-800 text-xl mb-4 px-4"
+            >
+              <h2 class="w-full">Name</h2>
+              <h2 class="w-full">Type</h2>
+              <h2 class="w-full">Placement</h2>
+              <h2 class="w-full">Actions</h2>
+            </div>
+            <div
+              class="flex justify-between w-full text-gray-800 text-sm py-2 bg-gray-100 rounded-md px-4"
+            >
+              <h2 class="w-full">Header menu</h2>
+              <h2 class="w-full">Collections</h2>
+              <h2 class="w-full">{{ 'header_top'|t }}</h2>
+              <div class="w-full flex space-x-2">
+                <span class="text-blue-500 hover:underline cursor-pointer">
+                  edit
+                </span>
+                <span class="text-red-500 hover:underline cursor-pointer">
+                  Delete
+                </span>
+              </div>
+            </div>
+          </div>
         </div>
-        <div class="flex justify-between w-full text-gray-800 text-sm py-2 bg-gray-100 rounded-md px-4">
-          <h2 class="w-full">Header menu</h2>
-          <h2 class="w-full">Collections</h2>
-          <h2 class="w-full">HERDER_TOP</h2>
-          <div class="w-full flex space-x-2">
-            <button class="text-blue-500 hover:underline bg-transparent">Edit</button>
-            <button class="text-red-500 hover:underline bg-transparent">Delete</button>
+
+        <div
+          v-if="showtoaddmenu"
+          class="fixed inset-0 flex justify-center bg-black bg-opacity-50 p-4 h-full"
+        >
+          <div
+            class="w-full bg-white rounded-lg shadow-lg border border-gray-300 p-6 "
+          >
+            <h2 class="text-xl font-semibold text-gray-800 mb-6 border-b pb-2">
+              Add New Menu
+            </h2>
+            <div class="w-full space-x-4 flex flex-col md:flex-row   ">
+              <!--to show items-->
+              <div class="space-y-4 w-full h-full">
+                <div class="flex flex-col">
+                  <label for="menu-name" class="text-gray-700 font-medium"
+                    >Name</label
+                  >
+                  <input
+                    id="menu-name"
+                    v-model="menuName"
+                    type="text"
+                    placeholder="Enter menu name"
+                    class="mt-1 p-2 rounded-md border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:outline-none"
+                  />
+                </div>
+
+                <div class="flex space-x-4">
+                  <div class="flex flex-col">
+                    <label for="menu-type" class="text-gray-700 font-medium"
+                      >Type</label
+                    >
+                    <select
+                      v-model="menuType"
+                      id="menu-type"
+                      class="mt-1 p-2 rounded-md border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:outline-none"
+                    >
+                    <option disabled value="">Select Menu Type</option> 
+                      <option value="simple">Simple</option>
+                      <option value="collections">Collections</option>
+                      <option value="pages">Pages</option>
+                      <option value="blogs">Blogs</option>
+                    </select>
+                  </div>
+                  <template>
+                    <div class="flex flex-col">
+                      <label for="menu-placement" class="text-gray-700 font-medium">
+                        Placement
+                      </label>
+                  
+                      <select
+                        id="menu-placement"
+                        v-model="placement"
+                        class="mt-1 p-2 rounded-md border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:outline-none"
+                      >
+                        <option disabled value="">Select placement</option> 
+                        <option value="header">HEADER</option>
+                        <option value="footer">FOOTER</option>
+                        <option value="sidebar">SIDE_BAR</option>
+                      </select>
+                    </div>
+                  </template>
+                  
+                  <script>
+                  export default {
+                    data() {
+                      return {
+                        placement: '', // Default to an empty value
+                      };
+                    },
+                  };
+                  </script>
+                  
+                </div>
+
+                <!--items add to list-->
+                <div
+                v-if="selectedMenu && selectedMenu.length>0"
+                 class="w-full bg-gray-50 rounded-md shadow-md border border-gray-300 space-y-4 p-4 ">
+                  <div
+                   v-for="(item ,i) in selectedMenu" key="i"
+                   class="flex justify-between  items-center space-x-2  border-gray-500 bg-white p-2  ">
+                   
+                    <span>{{item.title}}</span>
+                    <div class=" text-xs space-x-2">
+                      <span class="cursor-pointer ">
+                        edit
+                      </span>
+                      <span
+                      @click="RemoveItemFromMenu(item)"
+                       class="cursor-pointer hover:text-red-500">
+                        X
+                      </span>
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+
+
+              <!--to add items-->
+              <div class="w-full p-4 text-md h-full text-gray-900">
+
+                <div
+                  v-if="menuType=='collections'"
+                  class="p-6 bg-gray-50 rounded-md shadow-md border border-gray-300"
+                >
+                
+                  <h1 class="w-full mb-4">Collections</h1>
+                  <div class="space-y-2">
+                    <!--loop of collections-->
+                    <div class="flex  items-center space-x-2 text-sm bg-white p-2 rounded-md">
+                      <span class="cursor-pointer text-xl">
+                        +
+                      </span>
+                      <span>Clothes</span>
+                    </div>
+                  </div>
+                </div>
+
+                <div
+                  v-else-if="menuType=='pages'"
+                  class="p-6 bg-gray-50 rounded-md shadow-md border border-gray-300"
+                >
+                  <h1 class="w-full mb-4">Pages</h1>
+                  <div class="space-y-2">
+                    <!--loop of collections-->
+                    <div class="flex items-center space-x-2 text-sm bg-white p-2 rounded-md">
+                      <span class="cursor-pointer text-xl">
+                        +
+                      </span>
+                      <span>about</span>
+                    </div>
+                  </div>
+                </div>
+
+                <div
+                  v-else-if="menuType=='blogs'"
+                  class="p-6 bg-gray-50 rounded-md shadow-md border border-gray-300"
+                >
+                  <h1 class="w-full mb-4">Blogs</h1>
+                  <div class="space-y-2">
+                    <!--loop of collections-->
+                    <div class="flex space-x-2 items-center text-sm bg-white p-2 rounded-md">
+                      <span class="cursor-pointer text-xl">
+                        +
+                      </span>
+                      <span>Post 1</span>
+                    </div>
+                  </div>
+                </div>
+                <!--simple menu-->
+                <div
+                  v-else
+                  class="p-4 bg-gray-50 rounded-md shadow-md border border-gray-300 space-y-4 h-full"
+                >
+                  <!-- Form Fields -->
+                  <div class="space-y-4">
+                    <!-- Name Field 1 -->
+                    <div class="flex flex-col">
+                      <label for="name1" class="text-gray-700 font-medium"
+                        >Name</label>
+                      <input
+                        id="name1"
+                        type="text"
+                        v-model="name"
+                        placeholder="Enter name"
+                        class="mt-1 p-2 rounded-md border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:outline-none"
+                      />
+                    </div>
+
+                    <!-- URL -->
+                    <div class="flex flex-col">
+                      <label for="url" class="text-gray-700 font-medium"
+                        >Url</label
+                      >
+                      <input
+                        id="url"
+                        type="text"
+                        v-model="url"
+                        placeholder="Enter Url"
+                        class="mt-1 p-2 rounded-md border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:outline-none"
+                      />
+                    </div>
+                  </div>
+
+                  <!-- Radio Button Group -->
+                  <div class="space-y-2">
+                    <span class="text-gray-700 font-medium">Options</span>
+                    <div class="flex items-center space-x-4">
+                      <label class="flex items-center space-x-2">
+                        <input
+                          type="radio"
+                          name="options"
+                          value="blank"
+                          v-model="optionShow"
+                          class="rounded border-gray-300 text-sky-500 focus:ring-sky-500"
+                        />
+                        <span class="text-gray-700">Blank</span>
+                      </label>
+                      <label class="flex items-center space-x-2">
+                        <input
+                          type="radio"
+                          name="options"
+                          value="self"
+                          v-model="optionShow"
+                          class="rounded border-gray-300 text-sky-500 focus:ring-sky-500"
+                        />
+                        <span class="text-gray-700">Self</span>
+                      </label>
+                    </div>
+                  </div>
+                  
+
+                  <!-- Add Item Button -->
+                  <button
+                    class="w-full text-lg font-semibold justify-between space-x-2 w-full p-2 bg-sky-500 text-white rounded-md hover:bg-sky-600 transition duration-200 focus:outline-none focus:ring-2 focus:ring-sky-500"
+                   @click="AddNewItem"
+                    >
+                    Add New Item
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Buttons -->
+            <div class="flex justify-end mt-6 space-x-4">
+              <button
+                @click="showtoaddmenu = false"
+                class="py-2 px-4 rounded-md text-gray-700 border border-gray-300 hover:bg-gray-100"
+              >
+                Cancel
+              </button>
+              <button
+                class="py-2 px-4 rounded-md bg-blue-500 text-white hover:bg-blue-600 focus:ring-2 focus:ring-blue-500 focus:outline-none"
+              >
+                Save
+              </button>
+            </div>
           </div>
         </div>
       </div>
-    </div>
+    </template>
   </div>
-  
+</div>
