@@ -37,7 +37,7 @@
              class=" mb-2">
               <div
               v-for="(item,i) in menus " :key="i"
-                class="flex justify-between w-full text-gray-800 text-sm py-2 bg-gray-100 rounded-md px-4"
+                class="flex justify-between w-full text-gray-800 text-sm py-2 bg-gray-100 rounded-md px-4 mb-2"
               >
                 <h2 class="w-full">{{item.name}}</h2>
                 <h2 class="w-full">{{item.menu_type}}</h2>
@@ -46,8 +46,10 @@
                   <span class="text-blue-500 hover:underline cursor-pointer">
                     edit
                   </span>
-                  <span class="text-red-500 hover:underline cursor-pointer">
-                    Delete
+                  <span 
+                  @click="DeleteMenu(item)"
+                  class="  text-red-500 hover:underline cursor-pointer">
+                    X
                   </span>
                 </div>
               </div>
@@ -79,6 +81,10 @@
                     placeholder="Enter menu name"
                     class="mt-1 p-2 rounded-md border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:outline-none"
                   />
+                  <span v-if="errorhint&&errorhint.place=='under_menu_name'" 
+                  class=" text-red-500 text-sm">
+                    {{errorhint.text}}
+                  </span>
                 </div>
 
                 <div class="flex space-x-4">

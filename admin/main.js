@@ -1,4 +1,3 @@
-
 var vm = new StoreinoApp({
   el: "#app_mega_menu",
   data: {
@@ -13,12 +12,14 @@ var vm = new StoreinoApp({
     showtoaddmenu: false,
     menuType: "",
     url: "/",
-    name: "", //for item in simple type
+    name: "", // For item in simple type
     menuName: "",
     optionShow: "blank",
     placement: "",
+    errorhint: {
+      place:'defaul',
+      text:'error!'},
   },
-  mounted() {},
   computed: {
     filteredMenus() {
       return this.selectedMenu.filter(
@@ -35,48 +36,53 @@ var vm = new StoreinoApp({
     },
   },
   methods: {
+    validateFields(fields) {
+      for (const [key, value] of Object.entries(fields)) {
+        if (!value) {
+          console.error(`Required field "${key}" is missing!`);
+          return false;
+        }
+      }
+      return true;
+    },
+    isDuplicateMenu(name, url) {
+      return this.selectedMenu.some(
+        (item) => item.name === name && item.url === url
+      );
+    },
     AddNewItem() {
-      if (!this.name || !this.url) {
-        console.error("Required fields are missing!");
+      if (
+        !this.validateFields({ name: this.name, url: this.url }) ||
+        this.isDuplicateMenu(this.name, this.url)
+      ) {
         return;
       }
-      const menu = {
+
+      this.selectedMenu.push({
         type: "simple",
         title: this.name,
         optionShow: this.optionShow,
         url: this.url,
-      };
+      });
 
-      const isDuplicate = this.selectedMenu.some(
-        (item) => item.name === menu.name && item.url === menu.url
-      );
-      if (isDuplicate) {
-        console.error("Duplicate menu item!");
-        return;
-      }
-      this.selectedMenu.push(menu);
-      this.url = "";
-      this.name = "";
+      this.resetFields(["name", "url"]);
       console.log("Menu added successfully:", this.selectedMenu);
     },
     RemoveItemFromMenu(item) {
-      this.selectedMenu = this.selectedMenu.filter((it) => {
-        return it != item;
-      });
+      this.selectedMenu = this.selectedMenu.filter((it) => it !== item);
     },
     updateMenuList() {
       this.selectedMenu = this.menus.filter(
         (item) => item.menuType === this.menuType
       );
     },
-
     async getModule() {
       let module = this.menuType ? this.menuType.toLowerCase() : "";
 
       if (!module || module === "simple") return;
-      try {
-        let params = {};
 
+      try {
+        const params = {};
         if (module === "blogs") {
           module = "pages";
           params.type = "POST";
@@ -86,7 +92,6 @@ var vm = new StoreinoApp({
 
         const { data } = await http.get(`/api/${module}/search`, { params });
         this.moduleData = data.results;
-
         console.log("Module fetched successfully:", data.results);
       } catch (error) {
         console.error("Error fetching module:", error);
@@ -97,56 +102,53 @@ var vm = new StoreinoApp({
         console.error("Invalid slug provided!");
         return;
       }
-      if (!Array.isArray(this.selectedMenu)) {
-        console.error("selectedMenu is not defined or not an array!");
-        return;
-      }
-
       if (this.selectedMenu.includes(slug)) {
         console.warn(`Slug "${slug}" is already in the menu!`);
         return;
       }
-      const menu = {
-        title: slug,
-      };
-      this.selectedMenu.push(menu);
 
+      this.selectedMenu.push({ title: slug });
       console.log(`Slug "${slug}" added successfully to the menu!`);
     },
-    RemoveItemFromMenuodule(slug) {
-      this.selectedMenu = this.selectedMenu.filter((item) => {
-        return item != slug;
-      });
+    RemoveItemFromMenuModule(slug) {
+      this.selectedMenu = this.selectedMenu.filter((item) => item !== slug);
     },
     OnSaveMenu() {
-      if (!this.selectedMenu || this.selectedMenu.length === 0) {
-        console.error("Cannot save menu: No items in the selected menu!");
-        return;
+
+     this.errorhint.place='',
+        this.errorhint.text=''
+
+       
+      if (
+        !this.validateFields({ menuName: this.menuName }) ||
+        this.selectedMenu.length === 0
+      ) {
+        this.errorhint.place='under_menu_name',
+        this.errorhint.text='menu name is empty'
+        return ;
       }
 
-      if (!this.menuName) {
-        console.error("Cannot save menu: menu name is missing!");
-        return;
-      }
-
-      const menu = {
-        name:this.menuName,
+      this.menus.push({
+        name: this.menuName,
         menu: this.selectedMenu,
-        placement: this.placement?this.placement:'HEADER',
-        menu_type: this.menuType?this.menuType:'simple',
-      };
-      console.log("🚀 ~ OnSaveMenu ~ menu:", menu) ;
-      
-      if (!Array.isArray(this.menus)) {
-        console.error(
-          "Cannot save menu: 'menus' is not defined or not an array!"
-        );
-        return;
-      }
+        placement: this.placement || "HEADER",
+        menu_type: this.menuType || "simple",
+      });
 
-      this.menus.push(menu);
-      this.showtoaddmenu=false;
-      console.log("Menus:", this.menus);
+      this.showtoaddmenu = false;
+      console.log("Menus saved successfully:", this.menus);
+    },
+    DeleteMenu(menu){
+      this.menus=this.menus.filter((item)=>{
+        return item!==menu ;
+      })
+    },  
+  EditMenu(menu){
+
+}
+  ,
+    resetFields(fields) {
+      fields.forEach((field) => (this[field] = ""));
     },
   },
 });
