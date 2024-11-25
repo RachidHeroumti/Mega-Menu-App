@@ -30,12 +30,15 @@
   }
 
 
-
-
-
-
-
+  .box_added_items{
   
+    min-height: 400px !important;
+  }
+  
+  .box_listes{
+  
+    height: 500px !important;
+  }
   /* transirion */
   #app_adinserter .mx-5 {
     margin: 0 5px;
