@@ -39,7 +39,7 @@
                 class="flex justify-between w-full text-gray-800 text-sm py-2 bg-gray-100 rounded-md px-4 mb-2"
               >
                 <h2 class="w-full">{{item.name}}</h2>
-                <h2 class="w-full">{{item.menu_type}}</h2>
+                <h2 class="w-full">{{item.DesignType}}</h2>
                 <h2 class="w-full">{{ item.placement}}</h2>
                 <div class="w-full flex space-x-2">
                   <span
@@ -62,15 +62,15 @@
 
         <div
           v-if="showtoaddmenu"
-          class="fixed inset-0 flex justify-center bg-black bg-opacity-50 p-4 h-full"
+          class="fixed inset-0 flex justify-center bg-black bg-opacity-50 p-4 h-full "
         >
           <div
-            class="w-full bg-white rounded-lg shadow-lg border border-gray-300 p-6"
+            class="w-full bg-white rounded-lg shadow-lg border border-gray-300 p-6 overflow-y-scroll"
           >
             <h2 class="text-xl font-semibold text-gray-800 mb-6 border-b pb-2">
               Add New Menu
             </h2>
-            <div class="w-full space-x-4 flex flex-col md:flex-row">
+            <div class="w-full  space-x-4 flex flex-col md:flex-row">
               <!--to show items-->
               <div class="space-y-4 w-full h-full">
                 <div class="flex flex-col">
@@ -121,48 +121,112 @@
                   <div
                   v-if="DesignType" class=" fixed z-50
                   top-0 w-screen h-screen bg-black bg-opacity-50 p-4">
-                    <div class=" bg-white p-4  w-full text-red flex justify-center items-center">
+                    <div class=" bg-white p-4 flex-col w-full text-red flex justify-center items-center">
                       You will found menu templates !
-                      <span @click="DesignType=false"
-                      class=" text-green "
-                      >Cancel</span>
+                      <button @click="DesignType=false"
+                      class=" text-green p-1 rounded-md"
+                      >Cancel</button>
                     </div>
 
                   </div>
 
-                  <!--list of items added to list -->
-                  <div
-                  v-if="selectedMenu && selectedMenu.length > 0"
-                  class="w-full h-full bg-gray-50 rounded-md shadow-md border border-gray-300 space-y-4 p-4"
-                >
-                  <!-- Add draggable wrapper -->
-                  <draggable
-                    v-model="selectedMenu"
-                    group="menu" 
-                    @end="onDragEnd" 
-                  >
-                    <!-- Existing list structure -->
-                    <div
-                      v-for="(item, i) in selectedMenu"
-                      :key="i"
-                      class="flex justify-between items-center space-x-2 border-gray-500 bg-white p-2 mb-2 "
-                    >
-                      <span>{{ item.slug }}</span>
-                      <div class="text-xs space-x-2 flex">
-                        <span class="cursor-pointer">
-                          <span v-html="svg('edit')"></span>
-                        </span>
-                        <span
-                          @click="RemoveItemFromMenu(item)"
-                          class="cursor-pointer hover:text-red-500"
-                        >
-                          <span v-html="svg('delete')"></span>
-                        </span>
-                      </div>
-                    </div>
-                  </draggable>
-                </div>
-                  <div class="w-full absolute bottom-0">
+ <!-------------------list of items added to list -->
+ <div
+ v-if="selectedMenu && selectedMenu.length > 0"
+ class="w-full h-full bg-gray-50 rounded-lg shadow-lg border border-gray-200 p-4 space-y-2"
+>
+ <draggable
+   v-model="selectedMenu"
+   :options="{
+     group: 'menu',
+     animation: 150,
+     fallbackOnBody: true,
+     swapThreshold: 0.65
+   }"
+   @end="onDragEnd"
+   class="space-y-2"
+ >
+   <div
+     v-for="(item, i) in selectedMenu"
+     :key="item.slug"
+     class="flex flex-col bg-white border border-gray-300 rounded-lg shadow-sm p-2 space-y-2"
+   >
+     <!-- Parent Item Header -->
+     <div class="flex justify-between items-center">
+       <span class="font-semibold text-gray-700">{{ item.slug }}</span>
+       <div class="text-gray-500 text-sm flex space-x-3">
+         <span
+           class="cursor-pointer hover:text-blue-500"
+           @click="EditMenu(item)"
+         >
+           <span v-html="svg('edit')"></span>
+         </span>
+         <span
+           class="cursor-pointer hover:text-red-500"
+           @click="RemoveItemFromMenu(item)"
+         >
+           <span v-html="svg('delete')"></span>
+         </span>
+       </div>
+     </div>
+
+     <!-- Nested Draggable for Children -->
+     <draggable
+       v-model="item.children"
+       :options="{
+         group: 'menu',
+         animation: 150,
+         fallbackOnBody: true,
+         swapThreshold: 0.65,
+         emptyInsertThreshold: 10
+       }"
+       @end="onDragEnd"
+       class="space-y-2 pl-2"
+       :class="{ 
+         'min-h-[50px] border-2 border-dashed border-gray-200': 
+         !item.children || item.children.length === 0 
+       }"
+     >
+       <!-- Child Items -->
+       <div
+         v-for="(child, j) in (item.children || [])"
+         :key="child.slug"
+         class="flex justify-between items-center bg-gray-100 border border-gray-300 rounded-md p-2"
+       >
+         <span class="text-gray-600">{{ child.slug }}</span>
+         <div class="text-gray-500 text-sm flex space-x-3">
+           <span
+             class="cursor-pointer hover:text-blue-500"
+             @click="EditMenu(child)"
+           >
+             <span v-html="svg('edit')"></span>
+           </span>
+           <span
+             class="cursor-pointer hover:text-red-500"
+             @click="RemoveItemFromMenu(child)"
+           >
+             <span v-html="svg('delete')"></span>
+           </span>
+         </div>
+       </div>
+
+       <!-- Placeholder for Empty Children -->
+       <div 
+         v-if="!item.children || item.children.length === 0"
+         class="text-center text-gray-400 p-1"
+       >
+         Drag items here
+       </div>
+     </draggable>
+   </div>
+ </draggable>
+</div>
+
+                
+                
+<!------------------------end     -->
+
+                  <div class="w-full   ">
                     <h1
                       class="w-full text-center text-gray-700 hover:text-gray-800 p-2 cursor-pointer"
                       @click="AddSimpleItem=true"
@@ -175,7 +239,7 @@
 
               <!--collections /pages /bloges-->
               <div
-                class="w-full box_listes p-4 text-md overflow-y-scroll h-full text-gray-900"
+                class="w-full box_listes p-4 text-md  h-full text-gray-900"
               >
                 <!-- Collections -->
                 <div
@@ -196,7 +260,7 @@
                       class="flex items-center space-x-2 text-sm bg-white p-2 rounded-md"
                     >
                       <span
-                        @click="AddNewItem(item.slug,url,'collections')"
+                        @click="AddNewItem(item.slug,`collection${item.slug}`,'collections')"
                         class="cursor-pointer text-xl"
                         >+</span
                       >
@@ -224,7 +288,7 @@
                       class="flex items-center space-x-2 text-sm bg-white p-2 rounded-md"
                     >
                       <span
-                        @click="AddNewItem(item.slug,url,'pages')"
+                        @click="AddNewItem(item.slug,`pages${item.slug}`,'pages')"
                         class="cursor-pointer text-xl"
                         >+</span
                       >
@@ -252,7 +316,7 @@
                       class="flex items-center space-x-2 text-sm bg-white p-2 rounded-md"
                     >
                       <span
-                        @click="AddNewItem(item.slug,url,'blogs')"
+                        @click="AddNewItem(item.slug,`blog${item.slug}`,'blogs')"
                         class="cursor-pointer text-xl"
                         >+</span
                       >
@@ -335,7 +399,7 @@
                   @click="AddNewItem(name,url,name)"
                 >
                   Add New Item
-                </button>
+                </button> 
 
                 <button
                 class="w-full text-lg font-semibold justify-between space-x-2 w-full p-2 bg-sky-500 text-white rounded-md hover:bg-sky-600 transition duration-200 focus:outline-none focus:ring-2 focus:ring-sky-500"
@@ -352,7 +416,7 @@
             </div>
 
             <!-- Buttons -->
-            <div class="flex justify-end mt-6 space-x-4">
+            <div class="flex justify-center mt-6 space-x-4">
               <button
                 @click="showtoaddmenu = false"
                 class="py-2 px-4 rounded-md text-gray-700 border border-gray-300 hover:bg-gray-100"
@@ -366,6 +430,7 @@
                 Save
               </button>
             </div>
+            
           </div>
         </div>
       </div>

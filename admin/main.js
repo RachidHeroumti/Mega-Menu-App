@@ -13,7 +13,7 @@ var vm = new StoreinoApp({
     isCollectionOpen: false,  
     isPagesOpen: false,       
     isBlogsOpen: false,
-    menuType: "",
+  
     AddSimpleItem:false,
     url: "/",
     name: "",
@@ -24,24 +24,15 @@ var vm = new StoreinoApp({
       place: "default",
       text: "error!",
     },
-    DesignType : false ,
+    DesignType : '' ,
   },
   components: {
     draggable: window.vuedraggable // Registering directly in components
   },
   computed: {
-    filteredMenus() {
-      return this.selectedMenu.filter(
-        (item) => item.menuType === this.menuType
-      );
-    },
   },
   watch: {
-    menuType(newType) {
-      console.log(`menuType changed to: ${newType}`);
-      this.updateMenuList();
-      //this.selectedMenu = [];
-    },
+   
   },
   mounted(){
     this.getModules();
@@ -56,10 +47,18 @@ var vm = new StoreinoApp({
       }
       return true;
     },
-    isDuplicateMenu(name, url) {
-      return this.selectedMenu.some(
-        (item) => item.name === name && item.url === url
-      );
+    isDuplicateMenu(name, url, menuList = this.selectedMenu) {
+      for (const item of menuList) {
+        if (item.slug === name || item.url === url) {
+          return true;
+        }
+        if (item.children && item.children.length > 0) {
+          if (this.isDuplicateMenu(name, url, item.children)) {
+            return true;
+          }
+        }
+      }
+      return false;
     },
     toggleSection(section) {
       if (section === 'collections') {
@@ -70,14 +69,39 @@ var vm = new StoreinoApp({
         this.isBlogsOpen = !this.isBlogsOpen;
       }
     },
-    
-    RemoveItemFromMenu(item) {
-      this.selectedMenu = this.selectedMenu.filter((it) => it !== item);
+  
+    RemoveItemFromMenu(itemToRemove, parentList = this.selectedMenu) {
+      for (let i = 0; i < parentList.length; i++) {
+        const item = parentList[i];
+        if (item === itemToRemove) {
+          parentList.splice(i, 1); // Remove item
+          return;
+        }
+        if (item.children && item.children.length > 0) {
+          this.RemoveItemFromMenu(itemToRemove, item.children); // Check nested children
+        }
+      }
     },
-    updateMenuList() {
-      this.selectedMenu = this.menus.filter(
-        (item) => item.menuType === this.menuType
-      );
+    AddNewItem(slug, url = "/", type, parentItem = null) {
+      if (!this.validateFields({ name: slug })) {
+        return;
+      }
+
+      const newItem = {
+        type,
+        slug,
+        url,
+        children: [],
+      };
+
+      if (parentItem) {
+        parentItem.children.push(newItem); // Add as a child of the parent
+      } else {
+        this.selectedMenu.push(newItem); // Add at the root level
+      }
+
+      this.resetFields(["name", "url"]);
+      console.log("Menu added successfully:", this.selectedMenu);
     },
     async getModules() {
       try {
@@ -103,27 +127,6 @@ var vm = new StoreinoApp({
         console.error("Error fetching modules:", error);
       }
     },
-    AddNewItem(slug, url = '/', type) {
-
-      if (!this.validateFields({ name: slug, url }) || this.isDuplicateMenu(slug, url)) {
-        return;
-      }
-    
-      this.selectedMenu.push({
-        type,
-        slug,
-        url,
-      });
-    
-      if (type === 'simple') {
-        this.resetFields(["name", "url"]);
-      }
-    
-      console.log("Menu added successfully:", this.selectedMenu);
-    },    
-    RemoveItemFromMenuModule(slug) {
-      this.selectedMenu = this.selectedMenu.filter((item) => item !== slug);
-    },
     OnSaveMenu() {
       this.errorhint = { place: "", text: "" };
 
@@ -142,12 +145,11 @@ var vm = new StoreinoApp({
         name: this.menuName,
         menu: this.selectedMenu,
         placement: this.placement || "HEADER",
-        menu_type: this.menuType || "simple",
+        type:this.DesignType||'simple',
       });
 
       this.showtoaddmenu = false;
       console.log("Menus saved successfully:", this.menus);
-      this.resetFields(["menuName", "menuType", "placement"]);
       this.selectedMenu = [];
     },
     DeleteMenu(menu) {
@@ -157,7 +159,7 @@ var vm = new StoreinoApp({
       console.log("menu to edit", menu);
       this.selectedMenu = menu.menu;
       this.menuName = menu.name;
-      this.menuType = menu.menu_type;
+      this.DesignType = menu.DesignType;
       this.placement = menu.placement;
       this.showtoaddmenu = true;
     },
@@ -166,16 +168,16 @@ var vm = new StoreinoApp({
     },
     svg(name) {
       const icons = {
-        'edit':'<svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#5f6368"><path d="M80 0v-160h800V0H80Zm160-320h56l312-311-29-29-28-28-311 312v56Zm-80 80v-170l448-447q11-11 25.5-17t30.5-6q16 0 31 6t27 18l55 56q12 11 17.5 26t5.5 31q0 15-5.5 29.5T777-687L330-240H160Zm560-504-56-56 56 56ZM608-631l-29-29-28-28 57 57Z"/></svg>', 
-        'delete':'<svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#5f6368"><path d="M280-120q-33 0-56.5-23.5T200-200v-520h-40v-80h200v-40h240v40h200v80h-40v520q0 33-23.5 56.5T680-120H280Zm400-600H280v520h400v-520ZM360-280h80v-360h-80v360Zm160 0h80v-360h-80v360ZM280-720v520-520Z"/></svg>',
-        'add':'<svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#5f6368"><path d="M440-440H200v-80h240v-240h80v240h240v80H520v240h-80v-240Z"/></svg>',
-        'open':'<svg xmlns="http://www.w3.org/2000/svg"  height="24px" viewBox="0 -960 960 960" width="24px" fill="#5f6368"><path d="m280-400 200-200 200 200H280Z"/></svg>',
-        'close':'<svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#5f6368"><path d="M480-360 280-560h400L480-360Z"/></svg>'
+        'edit':'<svg xmlns="http://www.w3.org/2000/svg" height="20px" viewBox="0 -960 960 960" width="20px" fill="#5f6368"><path d="M80 0v-160h800V0H80Zm160-320h56l312-311-29-29-28-28-311 312v56Zm-80 80v-170l448-447q11-11 25.5-17t30.5-6q16 0 31 6t27 18l55 56q12 11 17.5 26t5.5 31q0 15-5.5 29.5T777-687L330-240H160Zm560-504-56-56 56 56ZM608-631l-29-29-28-28 57 57Z"/></svg>', 
+        'delete':'<svg xmlns="http://www.w3.org/2000/svg" height="20px" viewBox="0 -960 960 960" width="20px" fill="#5f6368"><path d="M280-120q-33 0-56.5-23.5T200-200v-520h-40v-80h200v-40h240v40h200v80h-40v520q0 33-23.5 56.5T680-120H280Zm400-600H280v520h400v-520ZM360-280h80v-360h-80v360Zm160 0h80v-360h-80v360ZM280-720v520-520Z"/></svg>',
+        'add':'<svg xmlns="http://www.w3.org/2000/svg" height="20px" viewBox="0 -960 960 960" width="20px" fill="#5f6368"><path d="M440-440H200v-80h240v-240h80v240h240v80H520v240h-80v-240Z"/></svg>',
+        'open':'<svg xmlns="http://www.w3.org/2000/svg"  height="20px" viewBox="0 -960 960 960" width="20px" fill="#5f6368"><path d="m280-400 200-200 200 200H280Z"/></svg>',
+        'close':'<svg xmlns="http://www.w3.org/2000/svg" height="20px" viewBox="0 -960 960 960" width="20px" fill="#5f6368"><path d="M480-360 280-560h400L480-360Z"/></svg>'
       };
       return icons[name] || '';
     },
-     onDragEnd(evt) {
-      console.log("Drag ended. Final order:", this.selectedMenu);
+    onDragEnd(evt) {
+      console.log("Drag ended. Updated structure:", this.selectedMenu);
     },
   },
 });
