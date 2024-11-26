@@ -6622,8 +6622,11 @@ window.StoreinoApp.$store = {
   // Add Click Event To Button
   submitButton.addEventListener("click", async () => {
       try {
+        
+        const data =JSON.parse(window.__DATA__);
+        console.log("this data will submitt",data)
       await http.post(`/api/apps/update?route=${response.route}`, {
-          config: window.__DATA__,
+          config:{"menus":data} ,
       });
       alert("Updated");
       } catch (err) {

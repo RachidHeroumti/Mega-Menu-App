@@ -32,9 +32,15 @@ var vm = new StoreinoApp({
   computed: {
   },
   watch: {
-   
+    menus(newValue) {
+      this.data = newValue;
+      
+      __DATA__=JSON.stringify(newValue) ;
+      console.log("data in watch" ,__DATA__);
+    },
   },
   mounted(){
+   
     this.getModules();
   },
   methods: {
