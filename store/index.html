@@ -1,17 +1,138 @@
 <div>
-    <!--  -->
     <script src="../storeino-app-admin.js"></script>
-    <!--  -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/tailwindcss@latest/dist/tailwind.min.css"
+      rel="stylesheet"
+    />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <!--  -->
-
-    <div id="app_mega_menu">
-        <!--  -->
-        <template>
-           <h1 class=" text-red-500 text-3xl">This is application part </h1>
-           {{data}}
-        </template>
-        <!--  -->
+    <div id="app_mega_menu" class="flex justify-center flex-col w-full">
+      <template>
+        <div class="container bg-white flex w-full border-b shadow-md h-20">
+          <div
+            class="w-full flex flex-col gap-2 p-6"
+            v-for="(item, i) in menus.menu"
+            :key="i"
+          >
+            <!-- Parent Item -->
+            <h1
+              class="text-sm p-2 capitalize font-medium cursor-pointer"
+              @mouseover="HoverItem = i"
+              @mouseleave="HoverItem = null"
+            >
+              {{ item.slug }}
+            </h1>
+  
+            <!-- Children -->
+            <ul
+              v-if="item.children && item.children.length > 0"
+              class="flex flex-col fixed left-0 right-0 top-16 z-40 w-full"
+              @mouseover="HoverItem = i"
+              @mouseleave="HoverItem = null"
+            >
+              <!-- Collections -->
+              <li
+                class="flex w-full  justify-center  shadow-md bg-white "
+                v-if="HoverItem === i && item.type === 'collections'"
+              >
+                <div
+                  class="flex flex-col gap-2 p-4 w-full"
+                  v-for="(child, ii) in item.children"
+                  :key="ii"
+                >
+                  <img
+                    src="https://images.pexels.com/photos/90946/pexels-photo-90946.jpeg?auto=compress&cs=tinysrgb&w=600"
+                    alt="Collection"
+                    class="w-full h-40 object-cover"
+                  />
+                  <span class="text-gray-600 text-sm">
+                    Lorem ipsum dolor sit amet.
+                  </span>
+                  <div class="flex items-center">
+                    <img
+                      src="https://images.pexels.com/photos/3587478/pexels-photo-3587478.jpeg?auto=compress&cs=tinysrgb&w=600"
+                      alt="Collection"
+                      class="w-10 h-10 object-cover"
+                    />
+                    <span class="flex items-center hover:bg-gray-50 p-2">
+                      <span class="p-2">{{ child.slug }}</span>
+                    </span>
+                  </div>
+                </div>
+              </li>
+  
+              <!-- Blogs -->
+              <li
+                class="flex w-full  justify-center "
+                v-else-if="HoverItem === i && item.type === 'blogs'"
+              >
+                <div
+                  class="flex  shadow-md bg-white gap-2 p-4 w-full"
+                  v-for="(child, ii) in item.children"
+                  :key="ii"
+                >
+                <img
+                src="https://images.pexels.com/photos/90946/pexels-photo-90946.jpeg?auto=compress&cs=tinysrgb&w=600"
+                alt="Page"
+                class="w-40 h-40 object-cover"
+              />
+              <div class=" "> 
+                  <h1 class="mb-2">{{ child.slug }}</h1>
+                  <span class="text-gray-700 text-sm mb-2">
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                  </span>
+              </div>
+                </div>
+              </li>
+  
+              <!-- Pages -->
+              <li
+                class="flex w-full  justify-center bg-green-400 p-2 "
+                v-else-if="HoverItem === i && item.type === 'pages'"
+              >
+                <div
+                  class="flex  shadow-md bg-white gap-2 p-4 w-full space-x-2 bg-red-500 "
+                  v-for="(child, ii) in item.children"
+                  :key="ii"
+                >
+                  <img
+                    src="https://images.pexels.com/photos/90946/pexels-photo-90946.jpeg?auto=compress&cs=tinysrgb&w=600"
+                    alt="Page"
+                    class="w-full h-40 object-cover"
+                  />
+                  <div> 
+                      <span class="mb-2">{{ child.slug }}</span>
+                      <span class="text-gray-700 text-sm mb-2">
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                      </span>
+                  </div>
+                </div>
+              </li>
+  
+              <!-- Default -->
+              <li
+                class="flex   w-full  justify-center  shadow-md bg-white "
+                v-else-if="HoverItem === i && item.type !== 'blogs' && item.type !== 'collections' && item.type !== 'pages'"
+              >
+                <div
+                  class="flex flex-col justify-center   gap-2 p-2 w-32"
+                  v-for="(child, ii) in item.children"
+                  :key="ii"
+                >
+                <img
+                    src="https://images.pexels.com/photos/90946/pexels-photo-90946.jpeg?auto=compress&cs=tinysrgb&w=600"
+                    alt="Page"
+                    class="w-20 h-20 object-cover rounded-full"
+                  />
+                  <span class="flex justify-center items-center hover:bg-gray-50 p-2 ">
+                    <span v-html="svg('direction')"></span>
+                    <span class="px-2">{{ child.slug }}</span>
+                  </span>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </template>
     </div>
-    <!--  -->
-</div>
+  </div>
+  

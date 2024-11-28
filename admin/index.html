@@ -155,9 +155,16 @@
      <div class="flex justify-between items-center">
        <span class="font-semibold text-gray-700">{{ item.slug }}</span>
        <div class="text-gray-500 text-sm flex space-x-3">
+
+        <span
+        class="cursor-pointer hover:text-red-500"
+        @click="ToAddItemStyle=true"
+      >
+        <span v-html="svg('styles')"></span>
+      </span>
          <span
            class="cursor-pointer hover:text-blue-500"
-           @click="EditMenu(item)"
+           @click="EditItem(item)"
          >
            <span v-html="svg('edit')"></span>
          </span>
@@ -167,6 +174,9 @@
          >
            <span v-html="svg('delete')"></span>
          </span>
+
+     
+
        </div>
      </div>
 
@@ -213,10 +223,7 @@
      </draggable>
    </div>
  </draggable>
-</div>
-
-                
-                
+</div>                
 <!------------------------end     -->
 
                   <div class="w-full   ">
@@ -253,7 +260,7 @@
                       class="flex items-center space-x-2 text-sm bg-white p-2 rounded-md"
                     >
                       <span
-                        @click="AddNewItem(item.slug,`collection${item.slug}`,'collections')"
+                        @click="AddNewItem(item.slug,`collections/${item.slug}`,'collections')"
                         class="cursor-pointer text-xl"
                         >+</span
                       >
@@ -281,7 +288,7 @@
                       class="flex items-center space-x-2 text-sm bg-white p-2 rounded-md"
                     >
                       <span
-                        @click="AddNewItem(item.slug,`pages${item.slug}`,'pages')"
+                        @click="AddNewItem(item.slug,`pages/${item.slug}`,'pages')"
                         class="cursor-pointer text-xl"
                         >+</span
                       >
@@ -309,7 +316,7 @@
                       class="flex items-center space-x-2 text-sm bg-white p-2 rounded-md"
                     >
                       <span
-                        @click="AddNewItem(item.slug,`blog${item.slug}`,'blogs')"
+                        @click="AddNewItem(item.slug,`blog/${item.slug}`,'blogs')"
                         class="cursor-pointer text-xl"
                         >+</span
                       >
@@ -325,7 +332,7 @@
 
                 <div
                 v-if="AddSimpleItem"
-                class="p-4 bg-gray-50 rounded-md shadow-md border border-gray-300 space-y-4  w-96"
+                class="p-4 bg-gray-50 rounded-md shadow-md border border-gray-300 space-y-4  w-96 my-div"
               >
                 <!-- Form Fields -->
                 <div class="space-y-4">
@@ -389,7 +396,7 @@
                  <div class=" flex space-x-4 ">
                   <button
                   class="w-full text-lg font-semibold justify-between space-x-2 w-full p-2 bg-sky-500 text-white rounded-md hover:bg-sky-600 transition duration-200 focus:outline-none focus:ring-2 focus:ring-sky-500"
-                  @click="AddNewItem(name,url,name)"
+                  @click="AddNewItem(name,url,'simple')"
                 >
                   Add New Item
                 </button> 
@@ -406,6 +413,61 @@
 
                </div>
               
+               <div 
+               v-if="ToAddItemStyle"
+               class=" fixed top-0  w-full h-screen z-40 flex items-center  justify-center bg-black bg-opacity-50">
+
+               <div
+               v-if="ToAddItemStyle"
+               class="p-4 bg-gray-50 rounded-md shadow-md border border-gray-300 space-y-4  w-96 my-div"
+             >
+             <div class=" w-full flex gap-2">
+              <div class=" flex flex-col justify-between items-center">
+                <img class=" w-10 h-10 rounded-full"
+                 />
+                 <h1 class="text-center">Title</h1>
+                 <span class=" text-center">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Distinctio, maxime?</span>
+              </div>
+
+              <div class=" flex flex-col  items-center">
+                <img class=" w-10 h-10 rounded-full"
+                 />
+                 <h1 class="text-center">Title</h1>
+                 <span class=" text-center">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Distinctio, maxime?</span>
+              </div>
+
+              <div class=" flex flex-col justify-between items-center">
+                <img class=" w-10 h-10 rounded-full"
+                 />
+                 <div>
+                  <h1 class="text-center">Title</h1>
+                  <span class=" text-center">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Distinctio, maxime?</span>
+                 </div>
+                
+              </div>
+             </div>
+              
+
+               <!-- Add Item Button -->
+                <div class=" flex space-x-4 ">
+                 <button
+                 class="w-full text-lg font-semibold justify-between space-x-2 w-full p-2 bg-sky-500 text-white rounded-md hover:bg-sky-600 transition duration-200 focus:outline-none focus:ring-2 focus:ring-sky-500"
+                 
+               >
+                 Add New Item
+               </button> 
+
+               <button
+               class="w-full text-lg font-semibold justify-between space-x-2 w-full p-2 bg-sky-500 text-white rounded-md hover:bg-sky-600 transition duration-200 focus:outline-none focus:ring-2 focus:ring-sky-500"
+               @click="ToAddItemStyle=false"
+             >
+               Cancel
+             </button>
+                </div>
+             
+             </div>
+
+              </div>
             </div>
 
             <!-- Buttons -->

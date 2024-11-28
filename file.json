@@ -1,0 +1,110 @@
+[
+    {
+        "name": "menutest2",
+        "menu": [
+            {
+                "type": "collections",
+                "slug": "clothes",
+                "url": "collectionclothes",
+                "children": [
+                    {
+                        "type": "collections",
+                        "slug": "t-chirts",
+                        "url": "collectiont-chirts",
+                        "children": []
+                    },
+                    {
+                        "type": "collections",
+                        "slug": "tops",
+                        "url": "collectiontops",
+                        "children": []
+                    },
+                    {
+                        "type": "collections",
+                        "slug": "swiming",
+                        "url": "collections/swiming",
+                        "children": []
+                    }
+                ]
+            },
+            {
+                "type": "blogs",
+                "slug": "post2025",
+                "url": "blogpost2025",
+                "children": [
+                    {
+                        "type": "blogs",
+                        "slug": "new-post",
+                        "url": "blognew-post",
+                        "children": []
+                    }
+                ]
+            },
+            {
+                "type": "Help",
+                "slug": "Help",
+                "url": "/hetp",
+                "children": [
+                    {
+                        "type": "support",
+                        "slug": "support",
+                        "url": "support",
+                        "children": []
+                    },
+                    {
+                        "type": "questions",
+                        "slug": "questions",
+                        "url": "questions",
+                        "children": []
+                    }
+                ]
+            },
+            {
+                "type": "simple",
+                "slug": "Pages",
+                "url": "/pages",
+                "children": [
+                    {
+                        "type": "pages",
+                        "slug": "about",
+                        "url": "pages/about",
+                        "children": []
+                    }
+                ]
+            }
+        ],
+        "placement": "header",
+        "DesignType": "simple"
+    },
+    {
+        "name": "menu444",
+        "menu": [
+            {
+                "type": "collections",
+                "slug": "swiming",
+                "url": "collections/swiming",
+                "children": []
+            },
+            {
+                "type": "collections",
+                "slug": "kamis",
+                "url": "collections/kamis",
+                "children": []
+            },
+            {
+                "type": "collections",
+                "slug": "t-chirts",
+                "url": "collections/t-chirts",
+                "children": []
+            },
+            {
+                "type": "pages",
+                "slug": "about",
+                "url": "pages/about",
+                "children": []
+            }
+        ],
+        "placement": "HEADER",
+        "DesignType": "simple"
+    }
+]
