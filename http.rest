@@ -1,25 +1,22 @@
 # Prod
-@token =eyJhbGciOiJSUzI1NiIsImtpZCI6IjNmZDA3MmRmYTM4MDU2NzlmMTZmZTQxNzM4YzJhM2FkM2Y5MGIyMTQiLCJ0eXAiOiJKV1QifQ.eyJpc3MiOiJodHRwczovL3NlY3VyZXRva2VuLmdvb2dsZS5jb20vc3RvcmVpbm8tbGl2ZWNoYXQiLCJhdWQiOiJzdG9yZWluby1saXZlY2hhdCIsImF1dGhfdGltZSI6MTczMjYzNTcwMiwidXNlcl9pZCI6IkhEN1VxTzcxSFNoMThKSGNxWUpQY3FhSmw3ZDIiLCJzdWIiOiJIRDdVcU83MUhTaDE4SkhjcVlKUGNxYUpsN2QyIiwiaWF0IjoxNzMyNjM1NzAyLCJleHAiOjE3MzI2MzkzMDIsImVtYWlsIjoiY29udGFjdEBzdG9yZWluby5jb20iLCJlbWFpbF92ZXJpZmllZCI6ZmFsc2UsImZpcmViYXNlIjp7ImlkZW50aXRpZXMiOnsiZW1haWwiOlsiY29udGFjdEBzdG9yZWluby5jb20iXX0sInNpZ25faW5fcHJvdmlkZXIiOiJwYXNzd29yZCJ9fQ.bjJ-9zmkDj045xBY-5UMCC_C04XsrLmBhWQsJiFBEZa7fiy9xRv60ZcJWjmvaAOup6ol72N9wQsGIgf_9Fwm7c43deQhBUpS9Lv5WjC778O4r26Lo1AVcA--7OgMIZD4GBmF2kjQ2GL_uOz1YKVp9KpU2msMuHEmHwLMi3cMc6D3mDzQGfz9KZvWe__7orwF_VjEe9tsMlkYKg929Exp9HkL7Xr9cisjD_rJct3LRKBeo-_o55Yv16A-G9uKEWcz9i_JBlG3oMSU9CeEAVgaTlagBUbaWTsN7B2UiCe_iN5_MdHbZm1J704acxenrx1gezS9ZXC1VR7lZi6wEhPRjQ
+@token =eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdG9yZSI6eyJfaWQiOiI2NzFhMGQ4MWJkMTViOTAwMTIyNTY2NDEifSwic291cmNlIjoiVEhFTUVTIiwiaWF0IjoxNzMyNzg1MTI0LCJleHAiOjE3NjQzMjExMjR9.UEKkYnkgkYm0JGKRMuSU18z3xHiuXb4cENcLl4mPohA
+
 ###
-GET https://api-stores.storeino.com/api/apps/search/?route=countryblocker
+GET https://api-stores.storeino.world/api/apps/search/?route=megamenu
 X-Auth-Token: {{token}}
 
 ###
-POST https://api-stores.storeino.com/api/apps/update/?route=megamenu
+POST https://api-stores.storeino.world/api/apps/update/?route=megamenu
 Content-Type: application/json
 X-Auth-Token: {{token}}
 
 {
     "team": {
-        "_id": "650abc8b4436be5412bdk9e4",
         "name": "StoreinoApps",
         "url": "#"
     },
-    "config":{
-
-    },
     "images": ["https://storeno.b-cdn.net/market/10-2023/1697109170559.png"],
-    "placement": "AFTER_HEADER|BEFORE_FOOTER",
+    "placement": "HEADER|FOOTER|SIDE_BAR",
     "adminPlacement": "NONE",
     "isActive": true,
     "autoRenew": false,
@@ -27,4 +24,98 @@ X-Auth-Token: {{token}}
     "name": "MegaMenu",
     "route": "megamenu",
     "expiryDate": "2029-11-07T13:21:57.398Z",
+      "config": {
+        "menus": [
+          {
+            "name": "menu 1",
+            "menu": [
+              {
+                "type": "style3",
+                "slug": "clothes",
+                "url": "collections/clothes",
+                "children": [
+                  {
+                    "type": "simple",
+                    "slug": "women",
+                    "url": "collections/women",
+                    "children": []
+                  },
+                  {
+                    "type": "simple",
+                    "slug": "tops",
+                    "url": "collections/tops",
+                    "children": []
+                  }
+                ]
+              },
+              {
+                "type": "style1",
+                "slug": "post2025",
+                "url": "blog/post2025",
+                "children": [
+                  {
+                    "type": "simple",
+                    "slug": "new-post",
+                    "url": "blog/new-post",
+                    "children": []
+                  },
+                  {
+                    "type": "simple",
+                    "slug": "gift-from-it",
+                    "url": "blog/gift-from-it",
+                    "children": []
+                  }
+                ]
+              }
+            ],
+            "placement": "header",
+            "DesignType": "horizontal"
+          },
+          {
+            "name": "menu 2",
+            "menu": [
+              {
+                "type": "simple",
+                "slug": "Pages",
+                "url": "pages",
+                "children": [
+                  {
+                    "type": "simple",
+                    "slug": "shop",
+                    "url": "shop",
+                    "children": []
+                  },
+                  {
+                    "type": "simple",
+                    "slug": "cart",
+                    "url": "",
+                    "children": []
+                  }
+                ]
+              },
+              {
+                "type": "style1",
+                "slug": "Links",
+                "url": "",
+                "children": [
+                  {
+                    "type": "simple",
+                    "slug": "Facebook",
+                    "url": "facebook",
+                    "children": []
+                  },
+                  {
+                    "type": "simple",
+                    "slug": "Tic Tok",
+                    "url": "ticto",
+                    "children": []
+                  }
+                ]
+              }
+            ],
+            "placement": "header",
+            "DesignType": "vertical"
+          }
+        ]
+      }
 }

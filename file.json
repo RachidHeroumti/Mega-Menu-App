@@ -1,110 +1,148 @@
-[
+HTTP/1.1 200 OK
+Date: Fri, 29 Nov 2024 16:42:17 GMT
+Content-Type: application/json; charset=utf-8
+Transfer-Encoding: chunked
+Connection: close
+Vary: Accept-Encoding, Origin
+X-Powered-By: Express
+Access-Control-Allow-Credentials: true
+ETag: W/"69f-pV43+f/2/04TkgTAS28FU4xaULQ"
+Content-Encoding: gzip
+CF-Cache-Status: DYNAMIC
+Report-To: {"endpoints":[{"url":"https:\/\/a.nel.cloudflare.com\/report\/v4?s=Ll30PcFAw8uYN9IOobKoh2xDTaFBCfC9TMWn%2BqDqqffbcNeQuvSiv9A303ukE1caw0xjAr3k231Np6FxT8BcGCcXJDOI3JgigTJM9%2B9uZ%2B%2FHDOXMSmPZoN3dWobSV08%2FqqVVwP6Kz%2Bz51JIq"}],"group":"cf-nel","max_age":604800}
+NEL: {"success_fraction":0,"report_to":"cf-nel","max_age":604800}
+Strict-Transport-Security: max-age=15552000; includeSubDomains; preload
+X-Content-Type-Options: nosniff
+Server: cloudflare
+CF-RAY: 8ea40cd04baee3bc-LIS
+alt-svc: h3=":443"; ma=86400
+server-timing: cfL4;desc="?proto=TCP&rtt=34141&min_rtt=33275&rtt_var=14210&sent=4&recv=5&lost=0&retrans=0&sent_bytes=2818&recv_bytes=992&delivery_rate=70241&cwnd=250&unsent_bytes=0&cid=489741b471659e34&ts=315&x=0"
+
+{
+  "results": [
     {
-        "name": "menutest2",
-        "menu": [
-            {
-                "type": "collections",
+      "team": {
+      },
+      "images": [
+      ],
+      "placement": "BEFORE_HEADER|AFTER_DESCRIPTION",
+      "adminPlacement": "NONE",
+      "isActive": true,
+      "autoRenew": false,
+      "_id": "673cbc62cdbccfea8ee8038f",
+      "description": "Mega menu app for crate menu inside theme, with more items to customitze big menus",
+      "name": "MEGA MENU",
+      "route": "megamenu",
+      "url": "#",
+      "price": 0,
+      "expiryDate": "2029-11-07T13:21:57.398Z",
+      "payments": [],
+      "permissions": [],
+      "events": [],
+      "storeId": "671a0d81bd15b90012256641",
+      "createdAt": "2024-11-19T16:27:14.986Z",
+      "updatedAt": "2024-11-29T16:35:56.310Z",
+      "__v": 0,
+      "config": {
+        "menus": [
+          {
+            "name": "menu 1",
+            "menu": [
+              {
+                "type": "style3",
                 "slug": "clothes",
-                "url": "collectionclothes",
+                "url": "collections/clothes",
                 "children": [
-                    {
-                        "type": "collections",
-                        "slug": "t-chirts",
-                        "url": "collectiont-chirts",
-                        "children": []
-                    },
-                    {
-                        "type": "collections",
-                        "slug": "tops",
-                        "url": "collectiontops",
-                        "children": []
-                    },
-                    {
-                        "type": "collections",
-                        "slug": "swiming",
-                        "url": "collections/swiming",
-                        "children": []
-                    }
+                  {
+                    "type": "simple",
+                    "slug": "women",
+                    "url": "collections/women",
+                    "children": []
+                  },
+                  {
+                    "type": "simple",
+                    "slug": "tops",
+                    "url": "collections/tops",
+                    "children": []
+                  }
                 ]
-            },
-            {
-                "type": "blogs",
+              },
+              {
+                "type": "style1",
                 "slug": "post2025",
-                "url": "blogpost2025",
+                "url": "blog/post2025",
                 "children": [
-                    {
-                        "type": "blogs",
-                        "slug": "new-post",
-                        "url": "blognew-post",
-                        "children": []
-                    }
+                  {
+                    "type": "simple",
+                    "slug": "new-post",
+                    "url": "blog/new-post",
+                    "children": []
+                  },
+                  {
+                    "type": "simple",
+                    "slug": "gift-from-it",
+                    "url": "blog/gift-from-it",
+                    "children": []
+                  }
                 ]
-            },
-            {
-                "type": "Help",
-                "slug": "Help",
-                "url": "/hetp",
-                "children": [
-                    {
-                        "type": "support",
-                        "slug": "support",
-                        "url": "support",
-                        "children": []
-                    },
-                    {
-                        "type": "questions",
-                        "slug": "questions",
-                        "url": "questions",
-                        "children": []
-                    }
-                ]
-            },
-            {
+              }
+            ],
+            "placement": "header",
+            "DesignType": "horizontal"
+          },
+          {
+            "name": "menu 2",
+            "menu": [
+              {
                 "type": "simple",
                 "slug": "Pages",
-                "url": "/pages",
+                "url": "pages",
                 "children": [
-                    {
-                        "type": "pages",
-                        "slug": "about",
-                        "url": "pages/about",
-                        "children": []
-                    }
+                  {
+                    "type": "simple",
+                    "slug": "shop",
+                    "url": "shop",
+                    "children": []
+                  },
+                  {
+                    "type": "simple",
+                    "slug": "cart",
+                    "url": "",
+                    "children": []
+                  }
                 ]
-            }
-        ],
-        "placement": "header",
-        "DesignType": "simple"
-    },
-    {
-        "name": "menu444",
-        "menu": [
-            {
-                "type": "collections",
-                "slug": "swiming",
-                "url": "collections/swiming",
-                "children": []
-            },
-            {
-                "type": "collections",
-                "slug": "kamis",
-                "url": "collections/kamis",
-                "children": []
-            },
-            {
-                "type": "collections",
-                "slug": "t-chirts",
-                "url": "collections/t-chirts",
-                "children": []
-            },
-            {
-                "type": "pages",
-                "slug": "about",
-                "url": "pages/about",
-                "children": []
-            }
-        ],
-        "placement": "HEADER",
-        "DesignType": "simple"
+              },
+              {
+                "type": "style1",
+                "slug": "Links",
+                "url": "",
+                "children": [
+                  {
+                    "type": "simple",
+                    "slug": "Facebook",
+                    "url": "facebook",
+                    "children": []
+                  },
+                  {
+                    "type": "simple",
+                    "slug": "Tic Tok",
+                    "url": "ticto",
+                    "children": []
+                  }
+                ]
+              }
+            ],
+            "placement": "header",
+            "DesignType": "vertical"
+          }
+        ]
+      }
     }
-]
+  ],
+  "paginate": {
+    "total": 1,
+    "per_page": 20,
+    "current_page": 1,
+    "last_page": 1
+  }
+}

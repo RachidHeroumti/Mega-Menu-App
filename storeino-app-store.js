@@ -6556,7 +6556,10 @@ window.StoreinoApp.$store = {
     let response = await window.StoreinoApp.$store.get("apps", {
         route: "megamenu",
     });
+     
     window.__DATA__ = response.config.menus;
+
+    console.log("DATA responce :",response) ;
 
     // Create Script Element
     let main = document.createElement("script");

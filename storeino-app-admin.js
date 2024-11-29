@@ -6562,7 +6562,6 @@ window.StoreinoApp.$store = {
   let response = await window.StoreinoApp.$store.get("apps", {
       route: "megamenu",
   });
-  console.log("data config from route : megamenu",response.config.menus) ;
   window.__DATA__ =response.config.menus;
 
   // Get Language From Local Storage

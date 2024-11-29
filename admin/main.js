@@ -25,7 +25,8 @@ var vm = new StoreinoApp({
     },
     isUpdatingMenu: false,
     isUpdatingItem: false,
-    DesignType: "",
+    DesignType: "horizontal",
+    showDesignOption:false,
     ToAddItemStyle: false,
     itemStyle: "simple",
     styleType: "",
@@ -195,7 +196,7 @@ var vm = new StoreinoApp({
           name: this.menuName,
           menu: this.selectedMenu,
           placement: this.placement || "HEADER",
-          DesignType: this.DesignType || "simple",
+          DesignType: this.DesignType || "horizontal",
         });
       } else {
         // Editing existing menu
@@ -209,7 +210,7 @@ var vm = new StoreinoApp({
             name: this.menuName,
             menu: this.selectedMenu,
             placement: this.placement || "HEADER",
-            DesignType: this.DesignType || "simple",
+            DesignType: this.DesignType || "horizontal",
           });
         } else {
           console.warn("Menu to update not found:", this.menuName);
@@ -267,6 +268,9 @@ var vm = new StoreinoApp({
       this.placement = menu.placement;
       this.showtoaddmenu = true;
     },
+    saveMenuDesign(type){
+      this.DesignType=type
+    },
     //---------------------------
     resetFields(fields) {
       fields.forEach((field) => (this[field] = ""));
@@ -283,6 +287,8 @@ var vm = new StoreinoApp({
           '<svg xmlns="http://www.w3.org/2000/svg" height="20px" viewBox="0 -960 960 960" width="20px" fill="#5f6368"><path d="M480-360 280-560h400L480-360Z"/></svg>',
         styles:
           '<svg xmlns="http://www.w3.org/2000/svg" height="20px" viewBox="0 -960 960 960" width="20px" fill="#5f6368"><path d="M340-540H200q-33 0-56.5-23.5T120-620v-140q0-33 23.5-56.5T200-840h140q33 0 56.5 23.5T420-760v140q0 33-23.5 56.5T340-540Zm-140-80h140v-140H200v140Zm140 500H200q-33 0-56.5-23.5T120-200v-140q0-33 23.5-56.5T200-420h140q33 0 56.5 23.5T420-340v140q0 33-23.5 56.5T340-120Zm-140-80h140v-140H200v140Zm560-340H620q-33 0-56.5-23.5T540-620v-140q0-33 23.5-56.5T620-840h140q33 0 56.5 23.5T840-760v140q0 33-23.5 56.5T760-540Zm-140-80h140v-140H620v140Zm140 500H620q-33 0-56.5-23.5T540-200v-140q0-33 23.5-56.5T620-420h140q33 0 56.5 23.5T840-340v140q0 33-23.5 56.5T760-120Zm-140-80h140v-140H620v140ZM340-620Zm0 280Zm280-280Zm0 280Z"/></svg>',
+          cancel: '<svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#EA3323"><path d="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z"/></svg>'
+      
       };
       return icons[name] || "";
     },

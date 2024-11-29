@@ -114,27 +114,113 @@
 
                     <div class="flex items-center h-full">
                       <h1
-                        @click="DesignType=true"
+                        @click="showDesignOption=true"
                         class="p-2 border border-sky-700 text-center cursor-pointer rounded-md"
                       >
                         Type Show
                       </h1>
                     </div>
                   </div>
+
                   <div
-                    v-if="DesignType"
-                    class="fixed z-50 top-0 w-screen h-screen bg-black bg-opacity-50 p-4"
+                    v-if="showDesignOption"
+                    class="fixed inset-0 z-50 flex items-center justify-center bg-black/50 px-4"
                   >
                     <div
-                      class="bg-white p-4 flex-col w-full text-red flex justify-center items-center"
+                      class="w-full max-w-md rounded-xl bg-white shadow-2xl p-8"
                     >
-                      You will found menu templates !
-                      <button
-                        @click="DesignType=false"
-                        class="text-green p-1 rounded-md"
+                      <!-- Header -->
+                      <h2
+                        class="text-xl font-semibold text-center text-gray-900 mb-6"
                       >
-                        Cancel
-                      </button>
+                        Select Design Layout
+                      </h2>
+
+                      <!-- Layout Options -->
+                      <div class="space-y-6">
+                        <!-- Vertical Layout -->
+                        <div>
+                          <label class="flex items-start space-x-3">
+                            <input
+                              type="radio"
+                              name="designLayout"
+                              value="vertical"
+                              v-model="DesignType"
+                              class="h-5 w-5 text-indigo-600 border-gray-300 focus:ring-indigo-500"
+                            />
+                            <span class="text-lg font-medium text-gray-700"
+                              >Vertical Layout</span
+                            >
+                          </label>
+                          <!-- Vertical Layout Example -->
+                          <div
+                            class="flex flex-col space-y-2 text-gray-600 ml-8 mt-4"
+                          >
+                            <div
+                              class="bg-gray-100 px-4 py-2 rounded-md shadow"
+                            >
+                              Item 1
+                            </div>
+                            <div
+                              class="bg-gray-100 px-4 py-2 rounded-md shadow"
+                            >
+                              Item 2
+                            </div>
+                            <div
+                              class="bg-gray-100 px-4 py-2 rounded-md shadow"
+                            >
+                              Item 3
+                            </div>
+                          </div>
+                        </div>
+
+                        <!-- Horizontal Layout -->
+                        <div>
+                          <label class="flex items-start space-x-3">
+                            <input
+                              type="radio"
+                              name="designLayout"
+                              value="horizontal"
+                              v-model="DesignType"
+                              class="h-5 w-5 text-emerald-600 border-gray-300 focus:ring-emerald-500"
+                            />
+                            <span class="text-lg font-medium text-gray-700"
+                              >Horizontal Layout</span
+                            >
+                          </label>
+                          <div class="flex space-x-2 text-gray-600 ml-8 mt-4">
+                            <div
+                              class="bg-gray-100 px-4 py-2 rounded-md shadow"
+                            >
+                              Item 1
+                            </div>
+                            <div
+                              class="bg-gray-100 px-4 py-2 rounded-md shadow"
+                            >
+                              Item 2
+                            </div>
+                            <div
+                              class="bg-gray-100 px-4 py-2 rounded-md shadow"
+                            >
+                              Item 3
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="text-center mt-6">
+                        <button
+                          @click="showDesignOption = false"
+                          class="bg-indigo-600 text-white rounded-lg px-6 py-2 hover:bg-indigo-700 transition-colors focus:outline-none focus:ring-2 focus:ring-indigo-500 mr-4"
+                        >
+                          Confirm
+                        </button>
+                        <button
+                          @click="showDesignOption = false"
+                          class="text-gray-500 hover:text-gray-700 px-4 py-2 transition-colors focus:outline-none"
+                        >
+                          Cancel
+                        </button>
+                      </div>
                     </div>
                   </div>
 
@@ -190,7 +276,7 @@
                         <draggable
                           v-model="item.children"
                           :options="{
-         group: 'menu',
+    group: 'menu',
          animation: 150,
          fallbackOnBody: true,
          swapThreshold: 0.65,
@@ -198,10 +284,7 @@
        }"
                           @end="onDragEnd"
                           class="space-y-2 pl-2"
-                          :class="{ 
-         'min-h-[50px] border-2 border-dashed border-gray-200': 
-         !item.children || item.children.length === 0 
-       }"
+                          :class="{   'min-h-[50px] ': !item.children || item.children.length === 0 }"
                         >
                           <!-- Child Items -->
                           <div
@@ -339,6 +422,14 @@
                 >
                   <!-- Form Fields -->
                   <div class="space-y-4">
+                    <div class="w-full flex justify-end items-end text-red-500">
+                      <span
+                        class="cursor-pointer text-center"
+                        @click="AddSimpleItem=false"
+                      >
+                        X
+                      </span>
+                    </div>
                     <!-- Name Field -->
                     <div class="flex flex-col">
                       <label for="name1" class="text-gray-700 font-medium"
@@ -403,13 +494,6 @@
                     >
                       Add New Item
                     </button>
-
-                    <button
-                      class="w-full text-lg font-semibold justify-between space-x-2 w-full p-2 bg-sky-500 text-white rounded-md hover:bg-sky-600 transition duration-200 focus:outline-none focus:ring-2 focus:ring-sky-500"
-                      @click="AddSimpleItem=false"
-                    >
-                      Cancel
-                    </button>
                   </div>
                 </div>
               </div>
@@ -451,19 +535,21 @@
                       'bg-blue-100 border-blue-500': itemStyle === 'style2',
                       'bg-gray-50': itemStyle !== 'style2'
                     }"
-                      class="flex flex-col items-center p-4 rounded-lg shadow-md border transition-all cursor-pointer"
+                      class="flex   p-4 rounded-lg shadow-md border transition-all cursor-pointer gap-2"
                       @click="selectStyle('style2')"
                     >
                       <img
                         src="https://images.pexels.com/photos/51383/photo-camera-subject-photographer-51383.jpeg?auto=compress&cs=tinysrgb&w=600"
-                        class="w-20 h-20 rounded-full mb-3"
+                        class="w-40 h-40 rounded-md mb-3"
                       />
-                      <h3 class="text-lg font-medium text-gray-600">Style 2</h3>
-                      <p class="text-sm text-gray-500 text-center">
-                        Lorem ipsum dolor sit amet, consectetur.
-                      </p>
+                      <div class=" flex flex-col gap-2 ">
+                        <h3 class="text-lg font-medium text-gray-600">Style 2</h3>
+                        <p class="text-sm text-gray-500 text-center">
+                          Lorem ipsum dolor sit amet, consectetur.
+                        </p>
+                      </div>
+                    
                     </div>
-
                     <!-- Style 3 -->
                     <div
                       :class="{
@@ -475,7 +561,7 @@
                     >
                       <img
                         src="https://images.pexels.com/photos/51383/photo-camera-subject-photographer-51383.jpeg?auto=compress&cs=tinysrgb&w=600"
-                        class="w-40 h-40 rounded-md"
+                        class="w-40 h-40 rounded-full"
                       />
                       <div>
                         <h3 class="text-lg font-medium text-gray-600">
