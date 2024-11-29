@@ -1,5 +1,5 @@
 <div>
-    <script src="../storeino-app-admin.js"></script>
+    <script src="../storeino-app-store.js"></script>
     <link
       href="https://cdn.jsdelivr.net/npm/tailwindcss@latest/dist/tailwind.min.css"
       rel="stylesheet"
@@ -19,9 +19,8 @@
               @mouseover="HoverItem = i"
               @mouseleave="HoverItem = null"
             >
-              {{ item.slug }}
+              {{ item }}
             </h1>
-  
             <!-- Children -->
             <ul
               v-if="item.children && item.children.length > 0"
@@ -32,7 +31,7 @@
               <!-- Collections -->
               <li
                 class="flex w-full  justify-center  shadow-md bg-white "
-                v-if="HoverItem === i && item.type === 'collections'"
+                v-if="HoverItem === i && item.type === 'style1'"
               >
                 <div
                   class="flex flex-col gap-2 p-4 w-full"
@@ -63,7 +62,7 @@
               <!-- Blogs -->
               <li
                 class="flex w-full  justify-center "
-                v-else-if="HoverItem === i && item.type === 'blogs'"
+                v-else-if="HoverItem === i && item.type === 'style2'"
               >
                 <div
                   class="flex  shadow-md bg-white gap-2 p-4 w-full"
@@ -87,7 +86,7 @@
               <!-- Pages -->
               <li
                 class="flex w-full  justify-center bg-green-400 p-2 "
-                v-else-if="HoverItem === i && item.type === 'pages'"
+                v-else-if="HoverItem === i && item.type === 'style2'"
               >
                 <div
                   class="flex  shadow-md bg-white gap-2 p-4 w-full space-x-2 bg-red-500 "
@@ -111,7 +110,7 @@
               <!-- Default -->
               <li
                 class="flex   w-full  justify-center  shadow-md bg-white "
-                v-else-if="HoverItem === i && item.type !== 'blogs' && item.type !== 'collections' && item.type !== 'pages'"
+                v-else-if="HoverItem === i && item.type !== 'auto'"
               >
                 <div
                   class="flex flex-col justify-center   gap-2 p-2 w-32"

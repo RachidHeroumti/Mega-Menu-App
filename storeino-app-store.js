@@ -6523,8 +6523,9 @@
 });
 
 // Http Create
-const baseURL = 'https://api-stores.storeino.com/';
+const baseURL = 'https://admin.storeino.world/stores';
 const token = window.localStorage.getItem("x-auth-token");
+console.log("token ",token)
 const http = axios.create({
     baseURL: baseURL,
     headers: { "x-auth-token": token }
@@ -6553,9 +6554,9 @@ window.StoreinoApp.$store = {
 (async () => {
     // Get App Config
     let response = await window.StoreinoApp.$store.get("apps", {
-        route: "countryblocker",
+        route: "megamenu",
     });
-    window.__DATA__ = response.config;
+    window.__DATA__ = response.config.menus;
 
     // Create Script Element
     let main = document.createElement("script");

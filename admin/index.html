@@ -4,9 +4,8 @@
     href="https://cdn.jsdelivr.net/npm/tailwindcss@latest/dist/tailwind.min.css"
     rel="stylesheet"
   />
-<script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.0/Sortable.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/vuedraggable@2.24.3/dist/vuedraggable.umd.min.js"></script>
-
+  <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.0/Sortable.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vuedraggable@2.24.3/dist/vuedraggable.umd.min.js"></script>
 
   <div class="w-full bg-white" id="app_mega_menu" v-if="data">
     <template>
@@ -62,7 +61,7 @@
 
         <div
           v-if="showtoaddmenu"
-          class="fixed inset-0 flex justify-center bg-black bg-opacity-50 p-4 h-full "
+          class="fixed inset-0 top-0 left-0 right-0 flex justify-center bg-black bg-opacity-50 p-4 h-full pb-20"
         >
           <div
             class="w-full bg-white rounded-lg shadow-lg border border-gray-300 p-6 overflow-y-scroll"
@@ -70,7 +69,7 @@
             <h2 class="text-xl font-semibold text-gray-800 mb-6 border-b pb-2">
               Add New Menu
             </h2>
-            <div class="w-full  space-x-4 flex flex-col md:flex-row">
+            <div class="w-full space-x-4 flex flex-col md:flex-row">
               <!--to show items-->
               <div class="space-y-4 w-full h-full">
                 <div class="flex flex-col">
@@ -93,7 +92,7 @@
                 </div>
 
                 <div class="flex flex-col space-y-4 box_added_items relative">
-                  <div class=" flex justify-between"> 
+                  <div class="flex justify-between">
                     <div class="flex flex-col">
                       <label
                         for="menu-placement"
@@ -112,121 +111,127 @@
                         <option value="sidebar">SIDE_BAR</option>
                       </select>
                     </div>
-                    
-                    <div class=" flex items-center h-full ">
-                      <h1 @click="DesignType=true"
-                       class=" p-2 border border-sky-700 text-center cursor-pointer rounded-md ">Type Show</h1>
+
+                    <div class="flex items-center h-full">
+                      <h1
+                        @click="DesignType=true"
+                        class="p-2 border border-sky-700 text-center cursor-pointer rounded-md"
+                      >
+                        Type Show
+                      </h1>
                     </div>
                   </div>
                   <div
-                  v-if="DesignType" class=" fixed z-50
-                  top-0 w-screen h-screen bg-black bg-opacity-50 p-4">
-                    <div class=" bg-white p-4 flex-col w-full text-red flex justify-center items-center">
+                    v-if="DesignType"
+                    class="fixed z-50 top-0 w-screen h-screen bg-black bg-opacity-50 p-4"
+                  >
+                    <div
+                      class="bg-white p-4 flex-col w-full text-red flex justify-center items-center"
+                    >
                       You will found menu templates !
-                      <button @click="DesignType=false"
-                      class=" text-green p-1 rounded-md"
-                      >Cancel</button>
+                      <button
+                        @click="DesignType=false"
+                        class="text-green p-1 rounded-md"
+                      >
+                        Cancel
+                      </button>
                     </div>
-
                   </div>
 
- <!-------------------list of items added to list -->
- <div
- v-if="selectedMenu && selectedMenu.length > 0"
- class="w-full h-full bg-gray-50 rounded-lg shadow-lg border border-gray-200 p-4 space-y-2"
->
- <draggable
-   v-model="selectedMenu"
-   :options="{
+                  <!-------------------list of items added to list -->
+                  <div
+                    v-if="selectedMenu && selectedMenu.length > 0"
+                    class="w-full h-full bg-gray-50 rounded-lg shadow-lg border border-gray-200 p-4 space-y-2"
+                  >
+                    <draggable
+                      v-model="selectedMenu"
+                      :options="{
      group: 'menu',
      animation: 150,
      fallbackOnBody: true,
      swapThreshold: 0.65
    }"
-   @end="onDragEnd"
-   class="space-y-2"
- >
-   <div
-     v-for="(item, i) in selectedMenu"
-     :key="item.slug"
-     class="flex flex-col bg-white border border-gray-300 rounded-lg shadow-sm p-2 space-y-2"
-   >
-     <!-- Parent Item Header -->
-     <div class="flex justify-between items-center">
-       <span class="font-semibold text-gray-700">{{ item.slug }}</span>
-       <div class="text-gray-500 text-sm flex space-x-3">
+                      @end="onDragEnd"
+                      class="space-y-2"
+                    >
+                      <div
+                        v-for="(item, i) in selectedMenu"
+                        :key="item.slug"
+                        class="flex flex-col bg-white border border-gray-300 rounded-lg shadow-sm p-2 space-y-2"
+                      >
+                        <!-- Parent Item Header -->
+                        <div class="flex justify-between items-center">
+                          <span class="font-semibold text-gray-700"
+                            >{{ item.slug }}</span
+                          >
+                          <div class="text-gray-500 text-sm flex space-x-3">
+                            <span
+                              class="cursor-pointer hover:text-red-500"
+                              @click="ToEditStyle(item)"
+                            >
+                              <span v-html="svg('styles')"></span>
+                            </span>
+                            <span
+                              class="cursor-pointer hover:text-blue-500"
+                              @click="EditItem(item)"
+                            >
+                              <span v-html="svg('edit')"></span>
+                            </span>
+                            <span
+                              class="cursor-pointer hover:text-red-500"
+                              @click="RemoveItemFromMenu(item)"
+                            >
+                              <span v-html="svg('delete')"></span>
+                            </span>
+                          </div>
+                        </div>
 
-        <span
-        class="cursor-pointer hover:text-red-500"
-        @click="ToAddItemStyle=true"
-      >
-        <span v-html="svg('styles')"></span>
-      </span>
-         <span
-           class="cursor-pointer hover:text-blue-500"
-           @click="EditItem(item)"
-         >
-           <span v-html="svg('edit')"></span>
-         </span>
-         <span
-           class="cursor-pointer hover:text-red-500"
-           @click="RemoveItemFromMenu(item)"
-         >
-           <span v-html="svg('delete')"></span>
-         </span>
-
-     
-
-       </div>
-     </div>
-
-     <!-- Nested Draggable for Children -->
-     <draggable
-       v-model="item.children"
-       :options="{
+                        <!-- Nested Draggable for Children -->
+                        <draggable
+                          v-model="item.children"
+                          :options="{
          group: 'menu',
          animation: 150,
          fallbackOnBody: true,
          swapThreshold: 0.65,
          emptyInsertThreshold: 10
        }"
-       @end="onDragEnd"
-       class="space-y-2 pl-2"
-       :class="{ 
+                          @end="onDragEnd"
+                          class="space-y-2 pl-2"
+                          :class="{ 
          'min-h-[50px] border-2 border-dashed border-gray-200': 
          !item.children || item.children.length === 0 
        }"
-     >
-       <!-- Child Items -->
-       <div
-         v-for="(child, j) in (item.children || [])"
-         :key="child.slug"
-         class="flex justify-between items-center bg-gray-100 border border-gray-300 rounded-md p-2"
-       >
-         <span class="text-gray-600">{{ child.slug }}</span>
-         <div class="text-gray-500 text-sm flex space-x-3">
-           <span
+                        >
+                          <!-- Child Items -->
+                          <div
+                            v-for="(child, j) in (item.children || [])"
+                            :key="child.slug"
+                            class="flex justify-between items-center bg-gray-100 border border-gray-300 rounded-md p-2"
+                          >
+                            <span class="text-gray-600">{{ child.slug }}</span>
+                            <div class="text-gray-500 text-sm flex space-x-3">
+                              <!-- <span
              class="cursor-pointer hover:text-blue-500"
              @click="EditMenu(child)"
            >
              <span v-html="svg('edit')"></span>
-           </span>
-           <span
-             class="cursor-pointer hover:text-red-500"
-             @click="RemoveItemFromMenu(child)"
-           >
-             <span v-html="svg('delete')"></span>
-           </span>
-         </div>
-       </div>
+           </span> -->
+                              <span
+                                class="cursor-pointer hover:text-red-500"
+                                @click="RemoveItemFromMenu(child)"
+                              >
+                                <span v-html="svg('delete')"></span>
+                              </span>
+                            </div>
+                          </div>
+                        </draggable>
+                      </div>
+                    </draggable>
+                  </div>
+                  <!------------------------end     -->
 
-     </draggable>
-   </div>
- </draggable>
-</div>                
-<!------------------------end     -->
-
-                  <div class="w-full   ">
+                  <div class="w-full">
                     <h1
                       class="w-full text-center text-gray-700 hover:text-gray-800 p-2 cursor-pointer"
                       @click="AddSimpleItem=true"
@@ -238,9 +243,7 @@
               </div>
 
               <!--collections /pages /bloges-->
-              <div
-                class="w-full box_listes p-4 text-md  h-full text-gray-900"
-              >
+              <div class="w-full box_listes p-4 text-md h-full text-gray-900">
                 <!-- Collections -->
                 <div
                   v-if="collections.length > 0"
@@ -260,7 +263,7 @@
                       class="flex items-center space-x-2 text-sm bg-white p-2 rounded-md"
                     >
                       <span
-                        @click="AddNewItem(item.slug,`collections/${item.slug}`,'collections')"
+                        @click="AddNewItem(item.slug,`collections/${item.slug}`)"
                         class="cursor-pointer text-xl"
                         >+</span
                       >
@@ -288,7 +291,7 @@
                       class="flex items-center space-x-2 text-sm bg-white p-2 rounded-md"
                     >
                       <span
-                        @click="AddNewItem(item.slug,`pages/${item.slug}`,'pages')"
+                        @click="AddNewItem(item.slug,`pages/${item.slug}`)"
                         class="cursor-pointer text-xl"
                         >+</span
                       >
@@ -316,7 +319,7 @@
                       class="flex items-center space-x-2 text-sm bg-white p-2 rounded-md"
                     >
                       <span
-                        @click="AddNewItem(item.slug,`blog/${item.slug}`,'blogs')"
+                        @click="AddNewItem(item.slug,`blog/${item.slug}`)"
                         class="cursor-pointer text-xl"
                         >+</span
                       >
@@ -326,147 +329,181 @@
                 </div>
               </div>
               <!-- Simple Menu -->
-               <div 
+              <div
                 v-if="AddSimpleItem"
-                class=" fixed top-0  w-full h-screen z-40 flex items-center  justify-center bg-black bg-opacity-50">
-
+                class="fixed top-0 w-full h-screen z-40 flex items-center justify-center bg-black bg-opacity-50"
+              >
                 <div
-                v-if="AddSimpleItem"
-                class="p-4 bg-gray-50 rounded-md shadow-md border border-gray-300 space-y-4  w-96 my-div"
-              >
-                <!-- Form Fields -->
-                <div class="space-y-4">
-                  <!-- Name Field -->
-                  <div class="flex flex-col">
-                    <label for="name1" class="text-gray-700 font-medium"
-                      >Name</label
-                    >
-                    <input
-                      id="name1"
-                      type="text"
-                      v-model="name"
-                      placeholder="Enter name"
-                      class="mt-1 p-2 rounded-md border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:outline-none"
-                    />
-                  </div>
-
-                  <!-- URL Field -->
-                  <div class="flex flex-col">
-                    <label for="url" class="text-gray-700 font-medium"
-                      >Url</label
-                    >
-                    <input
-                      id="url"
-                      type="text"
-                      v-model="url"
-                      placeholder="Enter Url"
-                      class="mt-1 p-2 rounded-md border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:outline-none"
-                    />
-                  </div>
-                </div>
-
-                <!-- Radio Button Group -->
-                <div class="space-y-2">
-                  <span class="text-gray-700 font-medium">Options</span>
-                  <div class="flex items-center space-x-4">
-                    <label class="flex items-center space-x-2">
-                      <input
-                        type="radio"
-                        name="options"
-                        value="blank"
-                        v-model="optionShow"
-                        class="rounded border-gray-300 text-sky-500 focus:ring-sky-500"
-                      />
-                      <span class="text-gray-700">Blank</span>
-                    </label>
-                    <label class="flex items-center space-x-2">
-                      <input
-                        type="radio"
-                        name="options"
-                        value="self"
-                        v-model="optionShow"
-                        class="rounded border-gray-300 text-sky-500 focus:ring-sky-500"
-                      />
-                      <span class="text-gray-700">Self</span>
-                    </label>
-                  </div>
-                </div>
-
-                <!-- Add Item Button -->
-                 <div class=" flex space-x-4 ">
-                  <button
-                  class="w-full text-lg font-semibold justify-between space-x-2 w-full p-2 bg-sky-500 text-white rounded-md hover:bg-sky-600 transition duration-200 focus:outline-none focus:ring-2 focus:ring-sky-500"
-                  @click="AddNewItem(name,url,'simple')"
+                  v-if="AddSimpleItem"
+                  class="p-4 bg-gray-50 rounded-md shadow-md border border-gray-300 space-y-4 w-96 my-div"
                 >
-                  Add New Item
-                </button> 
+                  <!-- Form Fields -->
+                  <div class="space-y-4">
+                    <!-- Name Field -->
+                    <div class="flex flex-col">
+                      <label for="name1" class="text-gray-700 font-medium"
+                        >Name</label
+                      >
+                      <input
+                        id="name1"
+                        type="text"
+                        v-model="name"
+                        placeholder="Enter name"
+                        class="mt-1 p-2 rounded-md border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:outline-none"
+                      />
+                    </div>
 
-                <button
-                class="w-full text-lg font-semibold justify-between space-x-2 w-full p-2 bg-sky-500 text-white rounded-md hover:bg-sky-600 transition duration-200 focus:outline-none focus:ring-2 focus:ring-sky-500"
-                @click="AddSimpleItem=false"
-              >
-                Cancel
-              </button>
-                 </div>
-              
-              </div>
+                    <!-- URL Field -->
+                    <div class="flex flex-col">
+                      <label for="url" class="text-gray-700 font-medium"
+                        >Url</label
+                      >
+                      <input
+                        id="url"
+                        type="text"
+                        v-model="url"
+                        placeholder="Enter Url"
+                        class="mt-1 p-2 rounded-md border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:outline-none"
+                      />
+                    </div>
+                  </div>
 
-               </div>
-              
-               <div 
-               v-if="ToAddItemStyle"
-               class=" fixed top-0  w-full h-screen z-40 flex items-center  justify-center bg-black bg-opacity-50">
+                  <!-- Radio Button Group -->
+                  <div class="space-y-2">
+                    <span class="text-gray-700 font-medium">Options</span>
+                    <div class="flex items-center space-x-4">
+                      <label class="flex items-center space-x-2">
+                        <input
+                          type="radio"
+                          name="options"
+                          value="blank"
+                          v-model="optionShow"
+                          class="rounded border-gray-300 text-sky-500 focus:ring-sky-500"
+                        />
+                        <span class="text-gray-700">Blank</span>
+                      </label>
+                      <label class="flex items-center space-x-2">
+                        <input
+                          type="radio"
+                          name="options"
+                          value="self"
+                          v-model="optionShow"
+                          class="rounded border-gray-300 text-sky-500 focus:ring-sky-500"
+                        />
+                        <span class="text-gray-700">Self</span>
+                      </label>
+                    </div>
+                  </div>
 
-               <div
-               v-if="ToAddItemStyle"
-               class="p-4 bg-gray-50 rounded-md shadow-md border border-gray-300 space-y-4  w-96 my-div"
-             >
-             <div class=" w-full flex gap-2">
-              <div class=" flex flex-col justify-between items-center">
-                <img class=" w-10 h-10 rounded-full"
-                 />
-                 <h1 class="text-center">Title</h1>
-                 <span class=" text-center">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Distinctio, maxime?</span>
-              </div>
+                  <!-- Add Item Button -->
+                  <div class="flex space-x-4">
+                    <button
+                      class="w-full text-lg font-semibold justify-between space-x-2 w-full p-2 bg-sky-500 text-white rounded-md hover:bg-sky-600 transition duration-200 focus:outline-none focus:ring-2 focus:ring-sky-500"
+                      @click="AddNewItem(name,url)"
+                    >
+                      Add New Item
+                    </button>
 
-              <div class=" flex flex-col  items-center">
-                <img class=" w-10 h-10 rounded-full"
-                 />
-                 <h1 class="text-center">Title</h1>
-                 <span class=" text-center">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Distinctio, maxime?</span>
-              </div>
-
-              <div class=" flex flex-col justify-between items-center">
-                <img class=" w-10 h-10 rounded-full"
-                 />
-                 <div>
-                  <h1 class="text-center">Title</h1>
-                  <span class=" text-center">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Distinctio, maxime?</span>
-                 </div>
-                
-              </div>
-             </div>
-              
-
-               <!-- Add Item Button -->
-                <div class=" flex space-x-4 ">
-                 <button
-                 class="w-full text-lg font-semibold justify-between space-x-2 w-full p-2 bg-sky-500 text-white rounded-md hover:bg-sky-600 transition duration-200 focus:outline-none focus:ring-2 focus:ring-sky-500"
-                 
-               >
-                 Add New Item
-               </button> 
-
-               <button
-               class="w-full text-lg font-semibold justify-between space-x-2 w-full p-2 bg-sky-500 text-white rounded-md hover:bg-sky-600 transition duration-200 focus:outline-none focus:ring-2 focus:ring-sky-500"
-               @click="ToAddItemStyle=false"
-             >
-               Cancel
-             </button>
+                    <button
+                      class="w-full text-lg font-semibold justify-between space-x-2 w-full p-2 bg-sky-500 text-white rounded-md hover:bg-sky-600 transition duration-200 focus:outline-none focus:ring-2 focus:ring-sky-500"
+                      @click="AddSimpleItem=false"
+                    >
+                      Cancel
+                    </button>
+                  </div>
                 </div>
-             
-             </div>
+              </div>
+              <!--for item style -->
+              <div
+                v-if="ToAddItemStyle"
+                class="fixed inset-0 z-40 flex items-center justify-center bg-black bg-opacity-50"
+              >
+                <div
+                  class="p-6 bg-white rounded-lg shadow-lg border border-gray-200 space-y-6"
+                >
+                  <h2 class="text-2xl font-semibold text-gray-700 text-center">
+                    Select a Style
+                  </h2>
 
+                  <div class="flex gap-6 justify-between">
+                    <!-- Style 1 -->
+                    <div
+                      :class="{
+                      'bg-blue-100 border-blue-500': itemStyle === 'style1',
+                      'bg-gray-50': itemStyle !== 'style1'
+                    }"
+                      class="flex flex-col items-center p-4 rounded-lg shadow-md border transition-all cursor-pointer"
+                      @click="selectStyle('style1')"
+                    >
+                      <img
+                        src="https://images.pexels.com/photos/51383/photo-camera-subject-photographer-51383.jpeg?auto=compress&cs=tinysrgb&w=600"
+                        class="w-full h-40 object-cover rounded-md mb-3"
+                      />
+                      <h3 class="text-lg font-medium text-gray-600">Style 1</h3>
+                      <p class="text-sm text-gray-500 text-center">
+                        Lorem ipsum dolor sit amet, consectetur.
+                      </p>
+                    </div>
+
+                    <!-- Style 2 -->
+                    <div
+                      :class="{
+                      'bg-blue-100 border-blue-500': itemStyle === 'style2',
+                      'bg-gray-50': itemStyle !== 'style2'
+                    }"
+                      class="flex flex-col items-center p-4 rounded-lg shadow-md border transition-all cursor-pointer"
+                      @click="selectStyle('style2')"
+                    >
+                      <img
+                        src="https://images.pexels.com/photos/51383/photo-camera-subject-photographer-51383.jpeg?auto=compress&cs=tinysrgb&w=600"
+                        class="w-20 h-20 rounded-full mb-3"
+                      />
+                      <h3 class="text-lg font-medium text-gray-600">Style 2</h3>
+                      <p class="text-sm text-gray-500 text-center">
+                        Lorem ipsum dolor sit amet, consectetur.
+                      </p>
+                    </div>
+
+                    <!-- Style 3 -->
+                    <div
+                      :class="{
+                      'bg-blue-100 border-blue-500': itemStyle === 'style3',
+                      'bg-gray-50': itemStyle !== 'style3'
+                    }"
+                      class="flex items-center gap-4 p-4 rounded-lg shadow-md border transition-all cursor-pointer"
+                      @click="selectStyle('style3')"
+                    >
+                      <img
+                        src="https://images.pexels.com/photos/51383/photo-camera-subject-photographer-51383.jpeg?auto=compress&cs=tinysrgb&w=600"
+                        class="w-40 h-40 rounded-md"
+                      />
+                      <div>
+                        <h3 class="text-lg font-medium text-gray-600">
+                          Style 3
+                        </h3>
+                        <p class="text-sm text-gray-500">
+                          Lorem ipsum dolor sit amet, consectetur.
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Buttons -->
+                  <div class="flex justify-center gap-4">
+                    <button
+                      @click="EditItemStyle()"
+                      class="px-4 py-2 bg-blue-500 text-white rounded-lg shadow-md hover:bg-blue-600 transition"
+                    >
+                      save
+                    </button>
+                    <button
+                      class="px-4 py-2 bg-gray-300 text-gray-700 rounded-lg shadow-md hover:bg-gray-400 transition"
+                      @click="ToAddItemStyle = false"
+                    >
+                      Cancel
+                    </button>
+                  </div>
+                </div>
               </div>
             </div>
 
@@ -485,7 +522,6 @@
                 Save
               </button>
             </div>
-            
           </div>
         </div>
       </div>
