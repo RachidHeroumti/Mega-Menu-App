@@ -38,8 +38,8 @@
                 class="flex justify-between w-full text-gray-800 text-sm py-2 bg-gray-100 rounded-md px-4 mb-2"
               >
                 <h2 class="w-full">{{item.name}}</h2>
-                <h2 class="w-full">{{item.DesignType}}</h2>
-                <h2 class="w-full">{{ item.placement}}</h2>
+                <h2 class="w-full uppercase">{{item.DesignType}}</h2>
+                <h2 class="w-full uppercase ">{{ item.placement}}</h2>
                 <div class="w-full flex space-x-2">
                   <span
                     @click="EditMenu(item)"
@@ -61,10 +61,10 @@
 
         <div
           v-if="showtoaddmenu"
-          class="fixed inset-0 top-0 left-0 right-0 flex justify-center bg-black bg-opacity-50 p-4 h-full pb-20"
+          class="fixed inset-0 top-0 z-30 left-0 right-0 flex justify-center bg-black bg-opacity-50 p-4 h-full pb-20"
         >
           <div
-            class="w-full bg-white rounded-lg shadow-lg border border-gray-300 p-6 overflow-y-scroll"
+            class="w-full bg-white rounded-lg shadow-lg border border-gray-300 p-6 overflow-y-scroll z-30"
           >
             <h2 class="text-xl font-semibold text-gray-800 mb-6 border-b pb-2">
               Add New Menu
@@ -425,9 +425,10 @@
                     <div class="w-full flex justify-end items-end text-red-500">
                       <span
                         class="cursor-pointer text-center"
+
                         @click="AddSimpleItem=false"
                       >
-                        X
+                      <span v-html="svg('cancel')"></span>
                       </span>
                     </div>
                     <!-- Name Field -->

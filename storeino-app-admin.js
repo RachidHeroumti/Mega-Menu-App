@@ -6615,9 +6615,48 @@ window.StoreinoApp.$store = {
 
   // Create sumbitBar Style
   let submitBarStyle = document.createElement("style");
-  submitBarStyle.innerText =
-      ".sticky-submit-bar { background-color: white; position: fixed; bottom: 0; display: flex; box-shadow: 0 0 5px #00000036; justify-content: flex-end; padding: 5px; box-sizing: border-box; left: 15px; right: 15px; border-radius: 5px 5px 0 0; border-top: 3px solid #5c96fc; } button.submit-button { background-color: #5c96fc; margin: 0; outline: none; border: 0; border-radius: 6px; cursor: pointer; position: relative; overflow: hidden; color: #fff; font-size: 1rem; padding: .75rem 2rem; } button.submit-button:hover { background-color: #4889fb; }";
-  document.head.appendChild(submitBarStyle);
+  submitBarStyle.innerText = `
+  .sticky-submit-bar {
+    background-color: #ffffff; /* Crisp white for better contrast */
+    position: fixed;
+    bottom: 0;
+    display: flex;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Softer, elevated shadow */
+    justify-content: flex-end;
+    padding: 10px 15px; /* More balanced padding */
+    box-sizing: border-box;
+    left: 15px;
+    right: 15px;
+    border-radius: 8px 8px 0 0; /* Slightly larger rounding for a modern look */
+    border-top: 4px solid #5c96fc; /* More defined border */
+  }
+
+  button.submit-button {
+    background-color: #5c96fc;
+    margin: 0;
+    outline: none;
+    border: 0;
+    border-radius: 8px; /* Consistent with the bar's radius */
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    color: #ffffff; /* Ensure consistent white text */
+    font-size: 1rem;
+    padding: 0.8rem 2rem; /* Slightly increased padding for a better tactile feel */
+    transition: background-color 0.3s ease, transform 0.2s ease; /* Smooth interaction effect */
+  }
+
+  button.submit-button:hover {
+    background-color: #4889fb;
+    transform: translateY(-2px); /* Subtle lift effect on hover */
+  }
+
+  button.submit-button:active {
+    transform: translateY(0); /* Prevent further lift on click */
+  }
+`;
+document.head.appendChild(submitBarStyle);
+
 
   // Add Click Event To Button
   submitButton.addEventListener("click", async () => {

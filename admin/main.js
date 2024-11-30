@@ -111,13 +111,30 @@ var vm = new StoreinoApp({
           return;
         }
 
-        const newItem = {
+        let newItem = {
           type: this.itemStyle,
           slug,
           url,
           children: [],
         };
 
+       // in collections containe (sub collection is)
+        if (url.startsWith("collechhhhhhhhhhhhtions/")) {
+          const collection = this.collections.find(item => item.slug === slug);
+          if (collection && collection.children) {
+           
+            const collectionChildren = collection.children.map(child => ({
+              type: this.itemStyle,
+              slug: child.slug,
+              url: `collections/${slug}/${child.slug}`,
+              children: []
+            }));
+           
+            newItem.children = [...newItem.children, ...collectionChildren];
+          }
+
+          console.log("")
+        }        
         if (parentItem) {
           parentItem.children.push(newItem);
         } else {
