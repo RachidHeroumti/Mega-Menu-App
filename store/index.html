@@ -7,134 +7,124 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <div id="app_mega_menu" class="flex justify-center flex-col w-full">
       <template>
-        <div
-        class="bg-white flex w-full border-b shadow-md h-20"
-        :class="menus.DesignType === 'horizontal' ? '' : 'flex-row'"
-      >
-        <div
-          class="w-full flex flex-col gap-2 p-6"
-          v-for="(item, i) in menus.menu"
-          :key="i"
-          @mouseenter="handleMouseEnter(i)"
-          @mouseleave="handleMouseLeave"
-        >
-          <h1
-            class="text-sm p-2 capitalize font-medium cursor-pointer"
-            @click="NavigateTo(item.url)"
-          >
-            {{ item.slug }}
-          </h1>
-          <ul
-            v-if="item.children && item.children.length > 0"
-            class="flex flex-col fixed left-0 right-0 top-16 z-40 w-full"
-            v-show="HoverItem === i"
-            @mouseenter="handleMouseEnter(i)"
-            @mouseleave="handleMouseLeave"
-          >
-            <!-- Style 1 -->
-            <li
-              class="flex w-full justify-center bg-white"
-              v-if="item.type === 'style1'"
-            >
-              <div
-                class="flex flex-col gap-2 p-4 w-full"
-                v-for="(child, ii) in item.children"
-                :key="ii"
-                @click="NavigateTo(child.url)"
-              >
-                <img
-                  src="https://images.pexels.com/photos/90946/pexels-photo-90946.jpeg?auto=compress&cs=tinysrgb&w=600"
-                  :alt="child.slug"
-                  class="w-full h-40 object-cover"
-                />
-                <span class="text-gray-600 text-sm">
-                  Lorem ipsum dolor sit amet.
-                </span>
-                <div class="flex items-center">
-                  <img
-                    src="https://images.pexels.com/photos/3587478/pexels-photo-3587478.jpeg?auto=compress&cs=tinysrgb&w=600"
-                    :alt="child.slug"
-                    class="w-10 h-10 object-cover"
-                  />
-                  <span class="flex items-center hover:bg-gray-50 p-2">
-                    <span class="p-2">{{ child.slug }}</span>
-                  </span>
-                </div>
-              </div>
-            </li>
+        <div v-for="(items, i) in menus" 
+        class="w-full" 
+        :style="{
+          color: items.contentColor || 'black', 
+          backgroundColor: items.backgroundColor || 'blue'
+        }">
+          <div class=" flex w-full border-b shadow-md h-20" :class="menus.DesignType === 'horizontal' ? '' : 'flex-row'">
+            <div class="w-full flex flex-col gap-2 p-6" v-for="(item, i) in items.menu" :key="i" @mouseenter="handleMouseEnter(i)" @mouseleave="handleMouseLeave">
+              <h1 class="text-sm p-2 capitalize font-medium cursor-pointer" @click="NavigateTo(item.url)">
+                {{ item.slug }}
+              </h1>
+              <ul
+                :style="{
+                color: items.contentColor || 'black', 
+                backgroundColor: items.backgroundColor || 'blue'
+              }"
+               v-if="item.children && item.children.length > 0" class="flex flex-col fixed left-0 right-0 top-16 z-40 w-full"
+                v-show="HoverItem === i" @mouseenter="handleMouseEnter(i)" @mouseleave="handleMouseLeave">
+                
+                <!-- Default (Simple) -->
+                <li  v-if="item.type === 'simple'"
+                 class="flex flex-col w-full shadow-md  " v-for="(child, ii) in item.children" :key="ii">
+                  <div class="flex flex-col justify-center" @click="NavigateTo(child.url)">
+                    <span class="flex justify-center items-center hover:bg-gray-50 p-2 gap-2">
+                      <span v-html="svg('direction')"></span>
+                      <span>{{ child.slug }}</span>
+                    </span>
       
-            <!-- Style 2 -->
-            <li
-              class="flex w-full justify-center"
-              v-else-if="item.type === 'style2'"
-            >
-              <div
-                class="flex shadow-md bg-white gap-2 p-4 w-full"
-                v-for="(child, ii) in item.children"
-                :key="ii"
-                @click="NavigateTo(child.url)"
-              >
-                <img
-                  src="https://images.pexels.com/photos/90946/pexels-photo-90946.jpeg?auto=compress&cs=tinysrgb&w=600"
-                  :alt="child.slug"
-                  class="w-40 h-40 object-cover"
-                />
-                <div>
-                  <h1 class="mb-2">{{ child.slug }}</h1>
-                  <span class="text-gray-700 text-sm mb-2">
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                  </span>
-                </div>
-              </div>
-            </li>
+                    <!-- Loop through children of children for Simple style -->
+                    <div v-if="child.children && child.children.length > 0" class="flex flex-col gap-2 ml-4 w-full">
+                      <div v-for="(subChild, iii) in child.children" :key="iii" @click="NavigateTo(subChild.url)" class="flex  items-center hover:bg-gray-50 p-2 gap-2">
+                        <span v-html="svg('direction')"></span>
+                        <span class=" text-sm cursor-pointer hover:underline">{{ subChild.slug }}</span>
+                      </div>
+                    </div>
+                  </div>
+                </li>
       
-            <!-- Style 3 -->
-            <li
-              class="flex w-full justify-center p-2"
-              v-else-if="item.type === 'style3'"
-            >
-              <div
-                class="flex flex-col justify-between items-center bg-white gap-2 p-4"
-                v-for="(child, ii) in item.children"
-                :key="ii"
-                @click="NavigateTo(child.url)"
-              >
-                <img
-                  src="https://images.pexels.com/photos/90946/pexels-photo-90946.jpeg?auto=compress&cs=tinysrgb&w=600"
-                  :alt="child.slug"
-                  class="w-20 h-20 object-cover rounded-full"
-                />
-                <div class="text-center flex flex-col">
-                  <h1 class="mb-2 text-center">{{ child.slug }}</h1>
-                  <span class="text-gray-700 text-sm mb-2 text-center">
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                  </span>
-                </div>
-              </div>
-            </li>
+                <!-- Style 1 -->
+                <li class="flex w-full  " v-if="item.type === 'style1'">
+                  <div class="flex flex-col gap-2 p-4" v-for="(child, ii) in item.children" :key="ii" @click="NavigateTo(child.url)">
+                    <img v-if="item.data && item.data.image" :src="item.data.image ? item.data.image.src : 'https://images.pexels.com/photos/3587478/pexels-photo-3587478.jpeg?auto=compress&cs=tinysrgb&w=600'" :alt="child.slug" class="h-40 w-40" />
+                    <span class="flex items-center hover:bg-gray-50 justify-center">
+                      <span class="p-2 text-center uppercase">{{ child.slug }}</span>
+                    </span>
+                    <span class="  text-sm">Lorem ipsum dolor sit amet.</span>
       
-            <!-- Default (Simple) -->
-            <li
-              class="flex flex-col w-full justify-center shadow-md bg-white"
-              v-else-if="item.type === 'simple'"
-            >
-              <div
-                class="flex flex-col justify-center"
-                v-for="(child, ii) in item.children"
-                :key="ii"
-                @click="NavigateTo(child.url)"
-              >
-                <span class="flex justify-center items-center hover:bg-gray-50 p-2 gap-2">
-                  <span v-html="svg('direction')"></span>
-                  <span>{{ child.slug }}</span>
-                </span>
-              </div>
-            </li>
-          </ul>
+                    <!-- Loop through children of children for Style 1 -->
+                    <div v-if="child.children && child.children.length > 0" class="flex flex-col gap-2 ml-4">
+                      <div v-for="(subChild, iii) in child.children" :key="iii" @click="NavigateTo(subChild.url)" class="flex items-center hover:bg-gray-50 p-2 gap-2">
+                        <span class=" text-sm cursor-pointer hover:underline">{{ subChild.slug }}</span>
+                      </div>
+                    </div>
+                  </div>
+                </li>
+      
+                <!-- Style 2 -->
+                <li class="flex w-full" v-else-if="item.type === 'style2'">
+                  <div class="flex shadow-md   gap-2 p-4 w-full" v-for="(child, ii) in item.children" :key="ii" @click="NavigateTo(child.url)">
+                    <img src="https://images.pexels.com/photos/90946/pexels-photo-90946.jpeg?auto=compress&cs=tinysrgb&w=600" :alt="child.slug" class="w-40 h-40 object-cover" />
+                    <div>
+                      <h1 class="mb-2">{{ child.slug }}</h1>
+                      <span class="  text-sm mb-2">Lorem ipsum dolor sit amet consectetur adipisicing elit.</span>
+                    </div>
+      
+                    <!-- Loop through children of children for Style 2 -->
+                    <div v-if="child.children && child.children.length > 0" class="flex flex-col gap-2 ml-4">
+                      <div v-for="(subChild, iii) in child.children" :key="iii" @click="NavigateTo(subChild.url)" class="flex  items-center hover:bg-gray-50 p-2 gap-2">
+                        <span class=" text-sm cursor-pointer hover:underline">{{ subChild.slug }}</span>
+                      </div>
+                    </div>
+                  </div>
+                </li>
+      
+                <!-- Style 3 -->
+                <li class="flex w-full p-2" v-else-if="item.type === 'style3'">
+                  <div class="flex flex-col justify-between items-center   gap-2 p-4" v-for="(child, ii) in item.children" :key="ii" @click="NavigateTo(child.url)">
+                    <img src="https://images.pexels.com/photos/90946/pexels-photo-90946.jpeg?auto=compress&cs=tinysrgb&w=600" :alt="child.slug" class="w-20 h-20 object-cover rounded-full" />
+                    <div class="text-center flex flex-col">
+                      <h1 class="mb-2 text-center">{{ child.slug }}</h1>
+                      <span class="  text-sm mb-2 text-center">Lorem ipsum dolor sit amet consectetur adipisicing elit.</span>
+                    </div>
+      
+                    <!-- Loop through children of children for Style 3 -->
+                    <div v-if="child.children && child.children.length > 0" class="flex flex-col gap-2 ml-4">
+                      <div v-for="(subChild, iii) in child.children" :key="iii" @click="NavigateTo(subChild.url)" class="flex  items-center hover:bg-gray-50 p-2 gap-2">
+                        <span class=" text-sm cursor-pointer hover:underline">{{ subChild.slug }}</span>
+                      </div>
+                    </div>
+                  </div>
+                </li>
+      
+                <!-- Style 4 -->
+                <li class="flex w-full p-2" v-else-if="item.type === 'style4'">
+                  <div class="flex flex-col justify-between items-center   gap-2 p-4" v-for="(child, ii) in item.children" :key="ii" @click="NavigateTo(child.url)">
+                    <img src="https://images.pexels.com/photos/90946/pexels-photo-90946.jpeg?auto=compress&cs=tinysrgb&w=600" :alt="child.slug" class="w-20 h-20 object-cover rounded-full" />
+                    <div class="text-center flex flex-col">
+                      <h1 class="mb-2 text-center">{{ child.slug }}</h1>
+                      <span class="  text-sm mb-2 text-center"></span>
+                    </div>
+      
+                    <!-- Loop through children of children for Style 4 -->
+                    <div v-if="child.children && child.children.length > 0" class="flex flex-col gap-2 ml-4">
+                      <div v-for="(subChild, iii) in child.children" :key="iii" @click="NavigateTo(subChild.url)" class="flex  items-center hover:bg-gray-50 p-2 gap-2">
+                        
+                        <span class=" text-sm cursor-pointer hover:underline">{{ subChild.slug }}</span>
+                      </div>
+                    </div>
+                  </div>
+                </li>
+      
+              </ul>
+            </div>
+          </div>
         </div>
-      </div>
-      
       </template>
+      
+      
     </div>
   </div>
   

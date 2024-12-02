@@ -6557,7 +6557,7 @@ window.StoreinoApp.$store = {
         route: "megamenu",
     });
      
-    window.__DATA__ = response.config.menus;
+    window.__DATA__ = response;
 
     console.log("DATA responce :",response) ;
 

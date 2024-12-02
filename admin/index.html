@@ -12,24 +12,24 @@
       <div class="w-full flex flex-col justify-center p-4">
         <div class="container border border-gray-300 p-4">
           <h1 class="text-2xl font-medium mb-4 text-black border-b pb-2">
-            Menus
+            {{'menus'|t}}
           </h1>
           <div class="flex justify-end w-full pb-5">
             <button
               @click="showtoaddmenu=true"
               class="text-white p-1 px-4 rounded-md bg-red-500"
             >
-              Add menu
+              {{'add_menu'|t}}
             </button>
           </div>
           <div>
             <div
               class="flex justify-between w-full font-medium text-gray-800 text-xl mb-4 px-4"
             >
-              <h2 class="w-full">Name</h2>
-              <h2 class="w-full">Type</h2>
-              <h2 class="w-full">Placement</h2>
-              <h2 class="w-full">Actions</h2>
+              <h2 class="w-full">{{'name'|t}}</h2>
+              <h2 class="w-full">{{'type'|t}}</h2>
+              <h2 class="w-full">{{'placement'|t}}</h2>
+              <h2 class="w-full">{{'actions'|t}}</h2>
             </div>
             <div v-if="menus" class="mb-2">
               <div
@@ -39,7 +39,7 @@
               >
                 <h2 class="w-full">{{item.name}}</h2>
                 <h2 class="w-full uppercase">{{item.DesignType}}</h2>
-                <h2 class="w-full uppercase ">{{ item.placement}}</h2>
+                <h2 class="w-full uppercase">{{ item.placement}}</h2>
                 <div class="w-full flex space-x-2">
                   <span
                     @click="EditMenu(item)"
@@ -74,7 +74,7 @@
               <div class="space-y-4 w-full h-full">
                 <div class="flex flex-col">
                   <label for="menu-name" class="text-gray-700 font-medium"
-                    >Name</label
+                    >{{'name'|t}}</label
                   >
                   <input
                     id="menu-name"
@@ -92,24 +92,44 @@
                 </div>
 
                 <div class="flex flex-col space-y-4 box_added_items relative">
-                  <div class="flex justify-between">
+                  <div class="flex flex-wrap justify-between items-center">
                     <div class="flex flex-col">
-                      <label
-                        for="menu-placement"
-                        class="text-gray-700 font-medium"
-                      >
-                        Placement
-                      </label>
                       <select
                         id="menu-placement"
                         v-model="placement"
                         class="mt-1 p-2 rounded-md border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:outline-none"
                       >
-                        <option disabled value="">Select placement</option>
-                        <option value="header">HEADER</option>
-                        <option value="footer">FOOTER</option>
-                        <option value="sidebar">SIDE_BAR</option>
+                        <option disabled value="">
+                           {{'select_placement'|t}}
+                        </option>
+                        <option value="header">{{'header'|t}}</option>
+                        <option value="footer">{{'footer'|t}}</option>
+                        <option value="sidebar">{{'side_bar'|t}}</option>
                       </select>
+                    </div>
+                    <div class="flex flex-wrap space-x-2">
+                      <div class="flex gap-2">
+                        <span>Bachgound Color</span>
+                        <input
+                          v-model="backgroundColor"
+                          class="w-8 h-5"
+                          type="color"
+                          id="head"
+                          name="head"
+                          value="#ffffff"
+                        />
+                      </div>
+                      <div class="flex gap-2">
+                        <span>Text Color</span>
+                        <input
+                          type="color"
+                          id="head"
+                          class="w-8 h-5 rounded-full outline-none"
+                          v-model="contentColor"
+                          name="head"
+                          value="#000000"
+                        />
+                      </div>
                     </div>
 
                     <div class="flex items-center h-full">
@@ -117,7 +137,7 @@
                         @click="showDesignOption=true"
                         class="p-2 border border-sky-700 text-center cursor-pointer rounded-md"
                       >
-                        Type Show
+                      {{'type_show'|t}}
                       </h1>
                     </div>
                   </div>
@@ -232,11 +252,11 @@
                     <draggable
                       v-model="selectedMenu"
                       :options="{
-     group: 'menu',
-     animation: 150,
-     fallbackOnBody: true,
-     swapThreshold: 0.65
-   }"
+                      group: 'menu',
+                      animation: 150,
+                      fallbackOnBody: true,
+                      swapThreshold: 0.65
+                    }"
                       @end="onDragEnd"
                       class="space-y-2"
                     >
@@ -247,9 +267,13 @@
                       >
                         <!-- Parent Item Header -->
                         <div class="flex justify-between items-center">
-                          <span class="font-semibold text-gray-700"
-                            >{{ item.slug }}</span
-                          >
+                          <span class="flex gap-2">
+                            <span v-html="svg('drag')"></span>
+                            <span class="font-semibold text-gray-700"
+                              >{{ item.slug }}</span
+                            >
+                          </span>
+
                           <div class="text-gray-500 text-sm flex space-x-3">
                             <span
                               class="cursor-pointer hover:text-red-500"
@@ -276,50 +300,89 @@
                         <draggable
                           v-model="item.children"
                           :options="{
-    group: 'menu',
-         animation: 150,
-         fallbackOnBody: true,
-         swapThreshold: 0.65,
-         emptyInsertThreshold: 10
-       }"
+                          group: 'menu',
+                          animation: 150,
+                          fallbackOnBody: true,
+                          swapThreshold: 0.65,
+                          emptyInsertThreshold: 10
+                        }"
                           @end="onDragEnd"
                           class="space-y-2 pl-2"
-                          :class="{   'min-h-[50px] ': !item.children || item.children.length === 0 }"
+                          :class="{ 'min-h-[50px]': !item.children || item.children.length === 0 }"
                         >
                           <!-- Child Items -->
                           <div
                             v-for="(child, j) in (item.children || [])"
                             :key="child.slug"
-                            class="flex justify-between items-center bg-gray-100 border border-gray-300 rounded-md p-2"
+                            class="flex flex-col bg-gray-100 border border-gray-300 rounded-md p-2 space-y-2"
                           >
-                            <span class="text-gray-600">{{ child.slug }}</span>
-                            <div class="text-gray-500 text-sm flex space-x-3">
-                              <!-- <span
-             class="cursor-pointer hover:text-blue-500"
-             @click="EditMenu(child)"
-           >
-             <span v-html="svg('edit')"></span>
-           </span> -->
-                              <span
-                                class="cursor-pointer hover:text-red-500"
-                                @click="RemoveItemFromMenu(child)"
-                              >
-                                <span v-html="svg('delete')"></span>
+                            <div class="flex justify-between items-center">
+                              <span class="flex gap-2">
+                                <span v-html="svg('drag')"></span>
+                                <span class="font-semibold text-gray-700"
+                                  >{{ child.slug }}</span
+                                >
                               </span>
+                              <div class="text-gray-500 text-sm flex space-x-3">
+                                <span
+                                  class="cursor-pointer hover:text-red-500"
+                                  @click="RemoveItemFromMenu(child)"
+                                >
+                                  <span v-html="svg('delete')"></span>
+                                </span>
+                              </div>
                             </div>
+
+                            <!-- Nested Draggable for Grandchildren -->
+                            <draggable
+                              v-model="child.children"
+                              :options="{
+                              group: 'menu',
+                              animation: 150,
+                              fallbackOnBody: true,
+                              swapThreshold: 0.65,
+                              emptyInsertThreshold: 10
+                            }"
+                              @end="onDragEnd"
+                              class="space-y-2 pl-4"
+                              :class="{ 'min-h-[50px]': !child.children || child.children.length === 0 }"
+                            >
+                              <!-- Grandchild Items -->
+                              <div
+                                v-for="(grandchild, k) in (child.children || [])"
+                                :key="grandchild.slug"
+                                class="flex justify-between items-center bg-gray-200 border border-gray-300 rounded-md p-2"
+                              >
+                                <span class="flex gap-2">
+                                  <span v-html="svg('drag')"></span>
+                                  <span class="font-semibold text-gray-700"
+                                    >{{ grandchild.slug }}</span
+                                  >
+                                </span>
+                                <div
+                                  class="text-gray-500 text-sm flex space-x-3"
+                                >
+                                  <span
+                                    class="cursor-pointer hover:text-red-500"
+                                    @click="RemoveItemFromMenu(grandchild)"
+                                  >
+                                    <span v-html="svg('delete')"></span>
+                                  </span>
+                                </div>
+                              </div>
+                            </draggable>
                           </div>
                         </draggable>
                       </div>
                     </draggable>
                   </div>
-                  <!------------------------end     -->
-
+                  <!------------------------end --------------------->
                   <div class="w-full">
                     <h1
                       class="w-full text-center text-gray-700 hover:text-gray-800 p-2 cursor-pointer"
                       @click="AddSimpleItem=true"
                     >
-                      Add New Item
+                      {{'add_new_menu'|t}}
                     </h1>
                   </div>
                 </div>
@@ -333,7 +396,7 @@
                   class="p-4 mb-2 bg-gray-50 rounded-md shadow-md border border-gray-300"
                 >
                   <h1 class="mb-2 flex justify-between">
-                    <span>Collections</span>
+                    <span>{{'collections'|t}}</span>
                     <span
                       @click="toggleSection('collections')"
                       v-html="svg(isCollectionOpen ? 'close' : 'open')"
@@ -346,7 +409,7 @@
                       class="flex items-center space-x-2 text-sm bg-white p-2 rounded-md"
                     >
                       <span
-                        @click="AddNewItem(item.slug,`collections/${item.slug}`)"
+                        @click="AddNewItem(item.slug,`collections/${item.slug}`,null,item)"
                         class="cursor-pointer text-xl"
                         >+</span
                       >
@@ -361,7 +424,7 @@
                   class="p-4 mb-2 bg-gray-50 rounded-md shadow-md border border-gray-300"
                 >
                   <h1 class="w-full mb-2 flex justify-between">
-                    <span>Pages</span>
+                    <span>{{'pages'|t}}</span>
                     <span
                       @click="toggleSection('pages')"
                       v-html="svg(isPagesOpen ? 'close' : 'open')"
@@ -374,7 +437,7 @@
                       class="flex items-center space-x-2 text-sm bg-white p-2 rounded-md"
                     >
                       <span
-                        @click="AddNewItem(item.slug,`pages/${item.slug}`)"
+                        @click="AddNewItem(item.slug,`pages/${item.slug}`,null,item)"
                         class="cursor-pointer text-xl"
                         >+</span
                       >
@@ -389,7 +452,7 @@
                   class="p-4 mb-2 bg-gray-50 rounded-md shadow-md border border-gray-300"
                 >
                   <h1 class="w-full mb-2 flex justify-between">
-                    <span>Blogs</span>
+                    <span>{{'blogs'|t}}</span>
                     <span
                       @click="toggleSection('blogs')"
                       v-html="svg(isBlogsOpen ? 'close' : 'open')"
@@ -402,7 +465,7 @@
                       class="flex items-center space-x-2 text-sm bg-white p-2 rounded-md"
                     >
                       <span
-                        @click="AddNewItem(item.slug,`blog/${item.slug}`)"
+                        @click="AddNewItem(item.slug,`blog/${item.slug}`,null,item)"
                         class="cursor-pointer text-xl"
                         >+</span
                       >
@@ -425,16 +488,15 @@
                     <div class="w-full flex justify-end items-end text-red-500">
                       <span
                         class="cursor-pointer text-center"
-
                         @click="AddSimpleItem=false"
                       >
-                      <span v-html="svg('cancel')"></span>
+                        <span v-html="svg('cancel')"></span>
                       </span>
                     </div>
                     <!-- Name Field -->
                     <div class="flex flex-col">
                       <label for="name1" class="text-gray-700 font-medium"
-                        >Name</label
+                        >{{'name'|t}}</label
                       >
                       <input
                         id="name1"
@@ -448,7 +510,7 @@
                     <!-- URL Field -->
                     <div class="flex flex-col">
                       <label for="url" class="text-gray-700 font-medium"
-                        >Url</label
+                        >{{'url'|t}}</label
                       >
                       <input
                         id="url"
@@ -462,7 +524,7 @@
 
                   <!-- Radio Button Group -->
                   <div class="space-y-2">
-                    <span class="text-gray-700 font-medium">Options</span>
+                    <span class="text-gray-700 font-medium">{{'options'|t}}</span>
                     <div class="flex items-center space-x-4">
                       <label class="flex items-center space-x-2">
                         <input
@@ -472,7 +534,7 @@
                           v-model="optionShow"
                           class="rounded border-gray-300 text-sky-500 focus:ring-sky-500"
                         />
-                        <span class="text-gray-700">Blank</span>
+                        <span class="text-gray-700">{{'blank'|t}}</span>
                       </label>
                       <label class="flex items-center space-x-2">
                         <input
@@ -482,7 +544,7 @@
                           v-model="optionShow"
                           class="rounded border-gray-300 text-sky-500 focus:ring-sky-500"
                         />
-                        <span class="text-gray-700">Self</span>
+                        <span class="text-gray-700">{{'name'|t}}</span>
                       </label>
                     </div>
                   </div>
@@ -493,7 +555,7 @@
                       class="w-full text-lg font-semibold justify-between space-x-2 w-full p-2 bg-sky-500 text-white rounded-md hover:bg-sky-600 transition duration-200 focus:outline-none focus:ring-2 focus:ring-sky-500"
                       @click="AddNewItem(name,url)"
                     >
-                      Add New Item
+                    {{'add_new_item'|t}}
                     </button>
                   </div>
                 </div>
@@ -507,27 +569,57 @@
                   class="p-6 bg-white rounded-lg shadow-lg border border-gray-200 space-y-6"
                 >
                   <h2 class="text-2xl font-semibold text-gray-700 text-center">
-                    Select a Style
+                    {{'select_a_style'|t}}
                   </h2>
 
-                  <div class="flex gap-6 justify-between">
+                  <div
+                    class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6 justify-between"
+                  >
+                    <!-- default -->
+                    <div
+                      :class="{
+                     'bg-blue-100 border-blue-500 shadow-md scale-110': itemStyle === 'simple',
+                     'bg-gray-50 ': itemStyle !== 'simple'
+                   }"
+                      class="flex flex-col relative p-4 rounded-lg shadow-md border transition-all cursor-pointer"
+                      @click="selectStyle('simple')"
+                    >
+                      <h3 class="text-lg font-medium mb-4">{{'default'|t}}</h3>
+
+                      <p class="text-sm text-gray-500 text-black">
+                        {{'item_1'|t}}
+                      </p>
+                      <p class="text-sm text-gray-500">{{'item_2'|t}}</p>
+                      <p class="text-sm text-gray-500">{{'item_4'|t}}</p>
+                      <span
+                        class="absolute top-2 right-2"
+                        v-if="itemStyle === 'simple'"
+                        v-html="svg('done')"
+                      ></span>
+                    </div>
+
                     <!-- Style 1 -->
                     <div
                       :class="{
-                      'bg-blue-100 border-blue-500': itemStyle === 'style1',
-                      'bg-gray-50': itemStyle !== 'style1'
+                      'bg-blue-100 border-blue-500 shadow-md scale-110': itemStyle === 'style1',
+                      'bg-gray-50 ': itemStyle !== 'style1'
                     }"
-                      class="flex flex-col items-center p-4 rounded-lg shadow-md border transition-all cursor-pointer"
+                      class="flex flex-col relative items-center p-4 rounded-lg shadow-md border transition-all cursor-pointer"
                       @click="selectStyle('style1')"
                     >
                       <img
                         src="https://images.pexels.com/photos/51383/photo-camera-subject-photographer-51383.jpeg?auto=compress&cs=tinysrgb&w=600"
                         class="w-full h-40 object-cover rounded-md mb-3"
                       />
-                      <h3 class="text-lg font-medium text-gray-600">Style 1</h3>
+                      <h3 class="text-lg font-medium">{{'style_1'|t}}</h3>
                       <p class="text-sm text-gray-500 text-center">
                         Lorem ipsum dolor sit amet, consectetur.
                       </p>
+                      <span
+                        class="absolute top-2 right-2"
+                        v-if="itemStyle === 'style1'"
+                        v-html="svg('done')"
+                      ></span>
                     </div>
 
                     <!-- Style 2 -->
@@ -536,20 +628,24 @@
                       'bg-blue-100 border-blue-500': itemStyle === 'style2',
                       'bg-gray-50': itemStyle !== 'style2'
                     }"
-                      class="flex   p-4 rounded-lg shadow-md border transition-all cursor-pointer gap-2"
+                      class="flex p-4 rounded-lg shadow-md border transition-all cursor-pointer gap-2 relative"
                       @click="selectStyle('style2')"
                     >
                       <img
                         src="https://images.pexels.com/photos/51383/photo-camera-subject-photographer-51383.jpeg?auto=compress&cs=tinysrgb&w=600"
-                        class="w-40 h-40 rounded-md mb-3"
+                        class="w-20 h-20 rounded-md mb-3"
                       />
-                      <div class=" flex flex-col gap-2 ">
-                        <h3 class="text-lg font-medium text-gray-600">Style 2</h3>
+                      <div class="flex flex-col gap-2">
+                        <h3 class="text-lg font-medium">{{'style_2'|t}}</h3>
                         <p class="text-sm text-gray-500 text-center">
                           Lorem ipsum dolor sit amet, consectetur.
                         </p>
                       </div>
-                    
+                      <span
+                        class="absolute top-2 right-2"
+                        v-if="itemStyle === 'style2'"
+                        v-html="svg('done')"
+                      ></span>
                     </div>
                     <!-- Style 3 -->
                     <div
@@ -557,21 +653,70 @@
                       'bg-blue-100 border-blue-500': itemStyle === 'style3',
                       'bg-gray-50': itemStyle !== 'style3'
                     }"
-                      class="flex items-center gap-4 p-4 rounded-lg shadow-md border transition-all cursor-pointer"
+                      class="flex flex-col items-center gap-4 p-4 relative rounded-lg shadow-md relative border transition-all cursor-pointer"
                       @click="selectStyle('style3')"
                     >
                       <img
                         src="https://images.pexels.com/photos/51383/photo-camera-subject-photographer-51383.jpeg?auto=compress&cs=tinysrgb&w=600"
                         class="w-40 h-40 rounded-full"
                       />
-                      <div>
-                        <h3 class="text-lg font-medium text-gray-600">
-                          Style 3
+                      <div
+                        class="w-full flex flex-col justify-between items-center"
+                      >
+                        <h3 class="text-lg font-medium text-center gap-2">
+                          {{'style_3'|t}}
                         </h3>
-                        <p class="text-sm text-gray-500">
+                        <p class="text-sm text-gray-500 text-center">
                           Lorem ipsum dolor sit amet, consectetur.
                         </p>
                       </div>
+                      <span
+                        class="absolute top-2 right-2"
+                        v-if="itemStyle === 'style3'"
+                        v-html="svg('done')"
+                      ></span>
+                    </div>
+
+                    <!-- Style 4 -->
+                    <div
+                      :class="{
+                     'bg-blue-100 border-blue-500': itemStyle === 'style4',
+                     'bg-gray-50': itemStyle !== 'style2'
+                   }"
+                      class="flex flex-col p-4 rounded-lg shadow-md border transition-all cursor-pointer gap-2 relative"
+                      @click="selectStyle('style4')"
+                    >
+                      <div class="relative">
+                        <img
+                          src="https://images.pexels.com/photos/51383/photo-camera-subject-photographer-51383.jpeg?auto=compress&cs=tinysrgb&w=600"
+                          class="w-full h-40 rounded-md mb-3"
+                        />
+                        <h3
+                          class="font-medium absolute inset-0 flex justify-center items-center text-white bg-black/50 rounded-md"
+                        >
+                          {{'style_4'|t}}
+                        </h3>
+                      </div>
+
+                      <div class="flex justify-between">
+                        <div class="flex flex-col">
+                          <h4>{{'item_1'|t}}</h4>
+                          <h4>{{'item_2'|t}}</h4>
+                          <h4>{{'item_3'|t}}</h4>
+                        </div>
+
+                        <div class="flex flex-col">
+                          <h4>{{'item_1'|t}}</h4>
+                          <h4>{{'item_2'|t}}</h4>
+                          <h4>{{'item_3'|t}}</h4>
+                        </div>
+                      </div>
+
+                      <span
+                        class="absolute top-2 right-2"
+                        v-if="itemStyle === 'style2'"
+                        v-html="svg('done')"
+                      ></span>
                     </div>
                   </div>
 
@@ -581,13 +726,13 @@
                       @click="EditItemStyle()"
                       class="px-4 py-2 bg-blue-500 text-white rounded-lg shadow-md hover:bg-blue-600 transition"
                     >
-                      save
+                      {{'save'|t}}
                     </button>
                     <button
                       class="px-4 py-2 bg-gray-300 text-gray-700 rounded-lg shadow-md hover:bg-gray-400 transition"
                       @click="ToAddItemStyle = false"
                     >
-                      Cancel
+                      {{'cancel'|t}}
                     </button>
                   </div>
                 </div>
@@ -600,13 +745,13 @@
                 @click="showtoaddmenu = false"
                 class="py-2 px-4 rounded-md text-gray-700 border border-gray-300 hover:bg-gray-100"
               >
-                Cancel
+                {{'cancel'|t}}
               </button>
               <button
                 @click="OnSaveMenu"
                 class="py-2 px-4 rounded-md bg-blue-500 text-white hover:bg-blue-600 focus:ring-2 focus:ring-blue-500 focus:outline-none"
               >
-                Save
+                {{'save'|t}}
               </button>
             </div>
           </div>

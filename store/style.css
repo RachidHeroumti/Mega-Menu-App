@@ -1,2 +1,5 @@
 
 
+.group:hover > div {
+    display: block;
+  }

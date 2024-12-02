@@ -1,3 +1,5 @@
+
+// menu = items in menu (note will help)
 var vm = new StoreinoApp({
   el: "#app_mega_menu",
   data: {
@@ -32,6 +34,8 @@ var vm = new StoreinoApp({
     styleType: "",
     saveSlug: "",
     selectedItemTochangeStyle: [],
+    contentColor:'#000000',
+    backgroundColor:'#ffffff'
   },
   components: {
     draggable: window.vuedraggable,
@@ -104,7 +108,7 @@ var vm = new StoreinoApp({
     },
     //---------------------------
     //Add or update item in menu
-    AddNewItem(slug, url = "/", parentItem = null) {
+    AddNewItem(slug, url = "/", parentItem = null,info=[]) {
       if (!this.isUpdating) {
         // Validate the fields before adding a new item
         if (!this.validateFields({ name: slug })) {
@@ -115,6 +119,7 @@ var vm = new StoreinoApp({
           type: this.itemStyle,
           slug,
           url,
+          data:info,
           children: [],
         };
 
@@ -187,11 +192,19 @@ var vm = new StoreinoApp({
 
         // Populate the data
         this.collections = results[0]?.data?.results || [];
+        console.log("🚀 ~ getModules ~  this.collections = results[0]?.data?.results || [];:",  this.collections  )
         this.blogs = results[1]?.data?.results || [];
+        console.log("🚀 ~ getModules ~  this.blogs = results[1]?.data?.results || [];:",  this.blogs )
         this.pages = results[2]?.data?.results || [];
+        console.log("🚀 ~ getModules ~  this.pages = results[2]?.data?.results || [];:",  this.pages )
+
+       
       } catch (error) {
         console.error("Error fetching modules:", error);
       }
+    },
+    async getCollectionById(id){
+
     },
     //--------------
     OnSaveMenu() {
@@ -214,6 +227,8 @@ var vm = new StoreinoApp({
           menu: this.selectedMenu,
           placement: this.placement || "HEADER",
           DesignType: this.DesignType || "horizontal",
+          contentColor :this.contentColor,
+          backgroundColor:this.backgroundColor
         });
       } else {
         // Editing existing menu
@@ -228,6 +243,8 @@ var vm = new StoreinoApp({
             menu: this.selectedMenu,
             placement: this.placement || "HEADER",
             DesignType: this.DesignType || "horizontal",
+            contentColor :this.contentColor,
+            backgroundColor:this.backgroundColor
           });
         } else {
           console.warn("Menu to update not found:", this.menuName);
@@ -304,8 +321,9 @@ var vm = new StoreinoApp({
           '<svg xmlns="http://www.w3.org/2000/svg" height="20px" viewBox="0 -960 960 960" width="20px" fill="#5f6368"><path d="M480-360 280-560h400L480-360Z"/></svg>',
         styles:
           '<svg xmlns="http://www.w3.org/2000/svg" height="20px" viewBox="0 -960 960 960" width="20px" fill="#5f6368"><path d="M340-540H200q-33 0-56.5-23.5T120-620v-140q0-33 23.5-56.5T200-840h140q33 0 56.5 23.5T420-760v140q0 33-23.5 56.5T340-540Zm-140-80h140v-140H200v140Zm140 500H200q-33 0-56.5-23.5T120-200v-140q0-33 23.5-56.5T200-420h140q33 0 56.5 23.5T420-340v140q0 33-23.5 56.5T340-120Zm-140-80h140v-140H200v140Zm560-340H620q-33 0-56.5-23.5T540-620v-140q0-33 23.5-56.5T620-840h140q33 0 56.5 23.5T840-760v140q0 33-23.5 56.5T760-540Zm-140-80h140v-140H620v140Zm140 500H620q-33 0-56.5-23.5T540-200v-140q0-33 23.5-56.5T620-420h140q33 0 56.5 23.5T840-340v140q0 33-23.5 56.5T760-120Zm-140-80h140v-140H620v140ZM340-620Zm0 280Zm280-280Zm0 280Z"/></svg>',
-          cancel: '<svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#EA3323"><path d="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z"/></svg>'
-      
+          cancel: '<svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#EA3323"><path d="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z"/></svg>',
+          done :'<svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#314D1C"><path d="M480-80q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q65 0 123 19t107 53l-58 59q-38-24-81-37.5T480-800q-133 0-226.5 93.5T160-480q0 133 93.5 226.5T480-160q133 0 226.5-93.5T800-480q0-18-2-36t-6-35l65-65q11 32 17 66t6 70q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Zm-56-216L254-466l56-56 114 114 400-401 56 56-456 457Z"/></svg>',
+         drag:'<svg xmlns="http://www.w3.org/2000/svg" height="20px" viewBox="0 -960 960 960" width="20px" fill="#314D1C"><path d="M480-117.92 329.89-267.73l34.03-33.85 92.5 92.2v-247.54H207.88l91.7 92.27-33.16 33.15-149.3-149.31 150.5-150.5 33.53 33.54-92.57 92.89h247.84v-247.35l-92.19 91.69-33.54-33.84L480-843.69l149.81 150.11-33.54 33.54-91.89-92.19v247.35h247.43l-91.69-91.77 33.46-33.46 149.3 149.3-149.3 149.31-33.54-33.54 91.38-91.88H504.38v248.23l92.27-92.5 33.46 33.15L480-117.92Z"/></svg>'
       };
       return icons[name] || "";
     },

@@ -1,9 +1,6 @@
-!(function (e, t) {
-  "object" == typeof exports && "undefined" != typeof module
-      ? (module.exports = t())
-      : "function" == typeof define && define.amd
-          ? define(t)
-          : ((e = e || self).Vue = t());
+!(function (e, t) {"object" == typeof exports && "undefined" != typeof module
+    ? (module.exports = t())
+    : "function" == typeof define && define.amd? define(t): ((e = e || self).Vue = t());
 })(this, function () {
   "use strict";
   var e = Object.freeze({});

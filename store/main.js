@@ -10,9 +10,21 @@ const vm = new StoreinoApp({
     moduleData: [],
     HoverItem: null,
     hoverTimeout: null,
+    placementComponents: [],
+    contentColor:'#000000',
+    backgroundColor:'#ffffff'
   },
   async mounted() {
-    this.menus = this.data[0];
+    this.menus = this.data.config.menus;
+    console.log("🚀 ~ mounted ~ this.menus = this.data.config.menus :",this.data.config.menus) ;
+
+    this.placementComponents = this.data.config.menus.filter((c) => {
+      console.log("compare", c.placement, "and", this.data.placement);
+      const placementsArray = this.data.placement.split('|'); 
+      return placementsArray.includes(c.placement.toUpperCase()); 
+    });
+  
+    
   },
   methods: {
     async getModules() {
@@ -61,15 +73,15 @@ const vm = new StoreinoApp({
       
     },
     handleMouseEnter(index) {
-      clearTimeout(this.hoverTimeout);
-      this.HoverItem = index;
+      clearTimeout(this.hoverTimeout); // Prevent timeout from hiding the menu
+      this.HoverItem = index; // Keep the current hovered index
     },
     handleMouseLeave() {
+      // Set a timeout to hide the menu, allowing smooth transitions
       this.hoverTimeout = setTimeout(() => {
         this.HoverItem = null;
-      }, 200); 
-    },
-    
+      }, 200);
+    },  
     svg(name) {
       const icons = {
         edit: '<svg xmlns="http://www.w3.org/2000/svg" height="20px" viewBox="0 -960 960 960" width="20px" fill="#5f6368"><path d="M80 0v-160h800V0H80Zm160-320h56l312-311-29-29-28-28-311 312v56Zm-80 80v-170l448-447q11-11 25.5-17t30.5-6q16 0 31 6t27 18l55 56q12 11 17.5 26t5.5 31q0 15-5.5 29.5T777-687L330-240H160Zm560-504-56-56 56 56ZM608-631l-29-29-28-28 57 57Z"/></svg>',
