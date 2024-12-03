@@ -20,7 +20,7 @@ var vm = new StoreinoApp({
     name: "",
     menuName: "",
     optionShow: "blank",
-    placement: "",
+    placement: "BEFORE_HEADER",
     errorhint: {
       place: "default",
       text: "error!",
@@ -123,7 +123,7 @@ var vm = new StoreinoApp({
           children: [],
         };
 
-       // in collections containe (sub collection is)
+       // just for test in  collections containe (sub collection is)
         if (url.startsWith("collechhhhhhhhhhhhtions/")) {
           const collection = this.collections.find(item => item.slug === slug);
           if (collection && collection.children) {
@@ -225,7 +225,7 @@ var vm = new StoreinoApp({
         this.menus.push({
           name: this.menuName,
           menu: this.selectedMenu,
-          placement: this.placement || "HEADER",
+          placement: this.placement || "BEFORE_HEADER",
           DesignType: this.DesignType || "horizontal",
           contentColor :this.contentColor,
           backgroundColor:this.backgroundColor
@@ -241,7 +241,7 @@ var vm = new StoreinoApp({
           this.$set(this.menus, menuIndex, {
             name: this.menuName,
             menu: this.selectedMenu,
-            placement: this.placement || "HEADER",
+            placement: this.placement || "BEFORE_HEADER",
             DesignType: this.DesignType || "horizontal",
             contentColor :this.contentColor,
             backgroundColor:this.backgroundColor

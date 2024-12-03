@@ -100,16 +100,16 @@
                         class="mt-1 p-2 rounded-md border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:outline-none"
                       >
                         <option disabled value="">
-                           {{'select_placement'|t}}
+                          {{'select_placement'|t}}
                         </option>
-                        <option value="header">{{'header'|t}}</option>
-                        <option value="footer">{{'footer'|t}}</option>
-                        <option value="sidebar">{{'side_bar'|t}}</option>
+                        <option value="BERORE_HEADER">{{'header'|t}}</option>
+                        <option value="BERORE_FOOTER">{{'footer'|t}}</option>
+                        <option value="SIDE_BAR">{{'side_bar'|t}}</option>
                       </select>
                     </div>
                     <div class="flex flex-wrap space-x-2">
                       <div class="flex gap-2">
-                        <span>Bachgound Color</span>
+                        <span>{{'background_color'|t}}</span>
                         <input
                           v-model="backgroundColor"
                           class="w-8 h-5"
@@ -120,7 +120,7 @@
                         />
                       </div>
                       <div class="flex gap-2">
-                        <span>Text Color</span>
+                        <span>{{'content_color'|t}}</span>
                         <input
                           type="color"
                           id="head"
@@ -137,7 +137,7 @@
                         @click="showDesignOption=true"
                         class="p-2 border border-sky-700 text-center cursor-pointer rounded-md"
                       >
-                      {{'type_show'|t}}
+                        {{'type_show'|t}}
                       </h1>
                     </div>
                   </div>
@@ -524,7 +524,9 @@
 
                   <!-- Radio Button Group -->
                   <div class="space-y-2">
-                    <span class="text-gray-700 font-medium">{{'options'|t}}</span>
+                    <span class="text-gray-700 font-medium"
+                      >{{'options'|t}}</span
+                    >
                     <div class="flex items-center space-x-4">
                       <label class="flex items-center space-x-2">
                         <input
@@ -555,7 +557,7 @@
                       class="w-full text-lg font-semibold justify-between space-x-2 w-full p-2 bg-sky-500 text-white rounded-md hover:bg-sky-600 transition duration-200 focus:outline-none focus:ring-2 focus:ring-sky-500"
                       @click="AddNewItem(name,url)"
                     >
-                    {{'add_new_item'|t}}
+                      {{'add_new_item'|t}}
                     </button>
                   </div>
                 </div>
@@ -584,13 +586,13 @@
                       class="flex flex-col relative p-4 rounded-lg shadow-md border transition-all cursor-pointer"
                       @click="selectStyle('simple')"
                     >
-                      <h3 class="text-lg font-medium mb-4">{{'default'|t}}</h3>
+                      <h3 class="font-medium mb-4">{{'default'|t}}</h3>
 
                       <p class="text-sm text-gray-500 text-black">
                         {{'item_1'|t}}
                       </p>
                       <p class="text-sm text-gray-500">{{'item_2'|t}}</p>
-                      <p class="text-sm text-gray-500">{{'item_4'|t}}</p>
+                      <p class="text-sm text-gray-500">{{'item_3'|t}}</p>
                       <span
                         class="absolute top-2 right-2"
                         v-if="itemStyle === 'simple'"
@@ -608,10 +610,10 @@
                       @click="selectStyle('style1')"
                     >
                       <img
-                        src="https://images.pexels.com/photos/51383/photo-camera-subject-photographer-51383.jpeg?auto=compress&cs=tinysrgb&w=600"
+                        src="https://images.pexels.com/photos/5699104/pexels-photo-5699104.jpeg?auto=compress&cs=tinysrgb&w=600"
                         class="w-full h-40 object-cover rounded-md mb-3"
                       />
-                      <h3 class="text-lg font-medium">{{'style_1'|t}}</h3>
+                      <h3 class="font-medium">{{'style_1'|t}}</h3>
                       <p class="text-sm text-gray-500 text-center">
                         Lorem ipsum dolor sit amet, consectetur.
                       </p>
@@ -632,11 +634,11 @@
                       @click="selectStyle('style2')"
                     >
                       <img
-                        src="https://images.pexels.com/photos/51383/photo-camera-subject-photographer-51383.jpeg?auto=compress&cs=tinysrgb&w=600"
+                        src="https://images.pexels.com/photos/39866/entrepreneur-startup-start-up-man-39866.jpeg?auto=compress&cs=tinysrgb&w=600"
                         class="w-20 h-20 rounded-md mb-3"
                       />
                       <div class="flex flex-col gap-2">
-                        <h3 class="text-lg font-medium">{{'style_2'|t}}</h3>
+                        <h3 class="font-medium">{{'style_2'|t}}</h3>
                         <p class="text-sm text-gray-500 text-center">
                           Lorem ipsum dolor sit amet, consectetur.
                         </p>
@@ -657,13 +659,13 @@
                       @click="selectStyle('style3')"
                     >
                       <img
-                        src="https://images.pexels.com/photos/51383/photo-camera-subject-photographer-51383.jpeg?auto=compress&cs=tinysrgb&w=600"
-                        class="w-40 h-40 rounded-full"
+                        src="https://images.pexels.com/photos/190819/pexels-photo-190819.jpeg?auto=compress&cs=tinysrgb&w=600"
+                        class="w-20 h-20 rounded-full"
                       />
                       <div
                         class="w-full flex flex-col justify-between items-center"
                       >
-                        <h3 class="text-lg font-medium text-center gap-2">
+                        <h3 class="font-medium text-center gap-2">
                           {{'style_3'|t}}
                         </h3>
                         <p class="text-sm text-gray-500 text-center">
@@ -681,14 +683,14 @@
                     <div
                       :class="{
                      'bg-blue-100 border-blue-500': itemStyle === 'style4',
-                     'bg-gray-50': itemStyle !== 'style2'
+                     'bg-gray-50': itemStyle !== 'style4'
                    }"
                       class="flex flex-col p-4 rounded-lg shadow-md border transition-all cursor-pointer gap-2 relative"
                       @click="selectStyle('style4')"
                     >
                       <div class="relative">
                         <img
-                          src="https://images.pexels.com/photos/51383/photo-camera-subject-photographer-51383.jpeg?auto=compress&cs=tinysrgb&w=600"
+                          src="https://images.pexels.com/photos/179909/pexels-photo-179909.jpeg?auto=compress&cs=tinysrgb&w=600"
                           class="w-full h-40 rounded-md mb-3"
                         />
                         <h3
@@ -698,13 +700,7 @@
                         </h3>
                       </div>
 
-                      <div class="flex justify-between">
-                        <div class="flex flex-col">
-                          <h4>{{'item_1'|t}}</h4>
-                          <h4>{{'item_2'|t}}</h4>
-                          <h4>{{'item_3'|t}}</h4>
-                        </div>
-
+                      <div class="flex justify-end">
                         <div class="flex flex-col">
                           <h4>{{'item_1'|t}}</h4>
                           <h4>{{'item_2'|t}}</h4>

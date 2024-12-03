@@ -16,106 +16,16 @@ X-Auth-Token: {{token}}
         "url": "#"
     },
     "images": ["https://storeno.b-cdn.net/market/10-2023/1697109170559.png"],
-    "placement": "HEADER|FOOTER|SIDE_BAR",
+    "placement": "BEFORE_HEADER|BEFORE_FOOTER|SIDE_BAR",
     "adminPlacement": "NONE",
     "isActive": true,
     "autoRenew": false,
-    "description": "mega menu application.",
+    "description": "Mega menu app for create menu inside theme, with more items to customitze big menus",
     "name": "MegaMenu",
     "route": "megamenu",
     "expiryDate": "2029-11-07T13:21:57.398Z",
       "config": {
         "menus": [
-          {
-            "name": "menu 1",
-            "menu": [
-              {
-                "type": "style3",
-                "slug": "clothes",
-                "url": "collections/clothes",
-                "children": [
-                  {
-                    "type": "simple",
-                    "slug": "women",
-                    "url": "collections/women",
-                    "children": []
-                  },
-                  {
-                    "type": "simple",
-                    "slug": "tops",
-                    "url": "collections/tops",
-                    "children": []
-                  }
-                ]
-              },
-              {
-                "type": "style1",
-                "slug": "post2025",
-                "url": "blog/post2025",
-                "children": [
-                  {
-                    "type": "simple",
-                    "slug": "new-post",
-                    "url": "blog/new-post",
-                    "children": []
-                  },
-                  {
-                    "type": "simple",
-                    "slug": "gift-from-it",
-                    "url": "blog/gift-from-it",
-                    "children": []
-                  }
-                ]
-              }
-            ],
-            "placement": "header",
-            "DesignType": "horizontal"
-          },
-          {
-            "name": "menu 2",
-            "menu": [
-              {
-                "type": "simple",
-                "slug": "Pages",
-                "url": "pages",
-                "children": [
-                  {
-                    "type": "simple",
-                    "slug": "shop",
-                    "url": "shop",
-                    "children": []
-                  },
-                  {
-                    "type": "simple",
-                    "slug": "cart",
-                    "url": "",
-                    "children": []
-                  }
-                ]
-              },
-              {
-                "type": "style1",
-                "slug": "Links",
-                "url": "",
-                "children": [
-                  {
-                    "type": "simple",
-                    "slug": "Facebook",
-                    "url": "facebook",
-                    "children": []
-                  },
-                  {
-                    "type": "simple",
-                    "slug": "Tic Tok",
-                    "url": "ticto",
-                    "children": []
-                  }
-                ]
-              }
-            ],
-            "placement": "header",
-            "DesignType": "vertical"
-          }
         ]
       }
 }

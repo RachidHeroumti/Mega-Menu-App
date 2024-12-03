@@ -12,16 +12,20 @@ const vm = new StoreinoApp({
     hoverTimeout: null,
     placementComponents: [],
     contentColor:'#000000',
-    backgroundColor:'#ffffff'
+    backgroundColor:'#ffffff',
   },
   async mounted() {
     this.menus = this.data.config.menus;
     console.log("🚀 ~ mounted ~ this.menus = this.data.config.menus :",this.data.config.menus) ;
-
+    this.menuesData = this.data.config.menus.filter(
+      (menu) => menu.placement === this.data.config.placement
+    );
+    
     this.placementComponents = this.data.config.menus.filter((c) => {
       console.log("compare", c.placement, "and", this.data.placement);
-      const placementsArray = this.data.placement.split('|'); 
-      return placementsArray.includes(c.placement.toUpperCase()); 
+      const placementsArray = this.data.placement.split("|");
+      //return c.placement === this.data.placement;
+      return placementsArray.includes(c.placement.toUpperCase());
     });
   
     
@@ -73,11 +77,10 @@ const vm = new StoreinoApp({
       
     },
     handleMouseEnter(index) {
-      clearTimeout(this.hoverTimeout); // Prevent timeout from hiding the menu
-      this.HoverItem = index; // Keep the current hovered index
+      clearTimeout(this.hoverTimeout); 
+      this.HoverItem = index; 
     },
     handleMouseLeave() {
-      // Set a timeout to hide the menu, allowing smooth transitions
       this.hoverTimeout = setTimeout(() => {
         this.HoverItem = null;
       }, 200);

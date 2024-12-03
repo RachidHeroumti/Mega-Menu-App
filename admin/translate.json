@@ -36,7 +36,8 @@
         "style_4": "Style 4",
         "save": "save",
         "select_placement": "Select placement",
-        "background_color": "Background Color"
+        "background_color": "Background Color",
+        "content_color": "Content Color"
     },
     "FR": {
         "header": "ENTÊTE",
